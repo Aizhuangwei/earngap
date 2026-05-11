@@ -1,0 +1,141 @@
+# EarnGap - Production Infrastructure
+# PostgreSQL + Redis (HA) + BullMQ + Express API + Next.js Frontend
+# Healthchecks on all services
+
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: earngap-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER:-earngap}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-earngap_secret}
+      POSTGRES_DB: ${DB_NAME:-earngap}
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - earngap-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U earngap"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 256M
+
+  redis:
+    image: redis:7-alpine
+    container_name: earngap-redis
+    restart: always
+    command: >
+      redis-server
+      --appendonly yes
+      --requirepass ${REDIS_PASSWORD:-earngap_redis}
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - earngap-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "${REDIS_PASSWORD:-earngap_redis}", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 128M
+
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    container_name: earngap-backend
+    restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      DATABASE_URL: postgresql://${DB_USER:-earngap}:${DB_PASSWORD:-earngap_secret}@postgres:5432/${DB_NAME:-earngap}
+      REDIS_URL: redis://:${REDIS_PASSWORD:-earngap_redis}@redis:6379
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-earngap_redis}
+      PORT: 4000
+      CORS_ORIGIN: ${CORS_ORIGIN:-https://earngap.com}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+      LOG_DIR: /var/log/earngap
+    ports:
+      - "127.0.0.1:4000:4000"
+    volumes:
+      - earngap_logs:/var/log/earngap
+    networks:
+      - earngap-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+    container_name: earngap-frontend
+    restart: always
+    depends_on:
+      - backend
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      NEXT_PUBLIC_API_URL: ${API_URL:-https://api.earngap.com}
+      NEXT_PUBLIC_WS_URL: ${WS_URL:-wss://api.earngap.com}
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - earngap-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+
+volumes:
+  postgres_data:
+  redis_data:
+  earngap_logs:
+
+networks:
+  earngap-net:
+    driver: bridge

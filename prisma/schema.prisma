@@ -1,0 +1,352 @@
+// EarnGap - Production Prisma Schema
+// PostgreSQL + 全关系型设计（无Json字段）
+// 支持：多来源、评分历史、生命周期、多语言
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ==================== 核心：机会 ====================
+
+enum OpportunityPhase {
+  EARLY      // 早期窗口
+  EXPANDING  // 扩张期
+  MATURE     // 成熟期
+  DECLINING  // 衰退期
+}
+
+enum RiskLevel {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum GapType {
+  TIME_GAP
+  KNOWLEDGE_GAP
+  PLATFORM_GAP
+  REGION_GAP
+  PRICE_GAP
+  RESOURCE_GAP
+  LANGUAGE_GAP
+  REGULATORY_GAP
+}
+
+model Opportunity {
+  id          String   @id @default(cuid())
+  title       String
+  subtitle   String?
+  summary    String   @db.Text
+  score      Float    @default(0)        // 综合评分 0-100
+  phase      OpportunityPhase @default(EARLY)
+  gapType    GapType
+  riskLevel  RiskLevel @default(MEDIUM)
+  windowDays Int?
+  deadline   DateTime?
+  conviction Float?   // 确定性 0-100%
+  scarcity   Float?   // 稀缺度 0-100%
+  growth     Float?   // 增长率百分比
+  difficulty String?  // "可落地" / "中等" / "困难"
+
+  // 去重哈希
+  contentHash String  @unique
+
+  // 状态
+  isActive   Boolean  @default(true)
+  isAlerted  Boolean  @default(false)
+  isFeatured Boolean  @default(false)
+
+  // 时间
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  // 关联
+  dimensions   OpportunityDimension[]
+  steps        OpportunityStep[]
+  sources      OpportunitySource[]
+  scoreHistory OpportunityScoreHistory[]
+  alerts       Alert[]
+  translations OpportunityTranslation[]
+}
+
+// ==================== 七维评分（独立表） ====================
+
+model OpportunityDimension {
+  id            String @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  label         String     // 趋势强度、市场潜力、信息差价值...
+  score         Float      // 实际得分
+  maxScore      Float      // 满分
+  weight        Float      @default(1.0) // 权重
+
+  @@index([opportunityId])
+  @@unique([opportunityId, label])
+}
+
+// ==================== 执行路径步骤（独立表） ====================
+
+model OpportunityStep {
+  id            String @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  stepOrder     Int
+  title         String
+  duration      String? // "1-2周"
+
+  @@index([opportunityId])
+  @@unique([opportunityId, stepOrder])
+}
+
+// ==================== 来源（独立表，多对多） ====================
+
+model Source {
+  id              String   @id @default(cuid())
+  name            String   @unique // GitHub, Reddit, HN, Twitter, ProductHunt
+  type            String   // "github" | "social" | "news" | "product"
+  baseUrl         String?
+  credibilityScore Float  @default(50)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+
+  opportunities OpportunitySource[]
+}
+
+model OpportunitySource {
+  id             String     @id @default(cuid())
+  opportunityId  String
+  opportunity    Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  sourceId       String
+  source         Source     @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  sourceUrl      String?
+  sourceScore    Float?     // 在该来源的热度分数
+  discoveredAt   DateTime   @default(now())
+
+  @@unique([opportunityId, sourceId])
+  @@index([sourceId])
+}
+
+// ==================== 评分历史 ====================
+
+model OpportunityScoreHistory {
+  id            String   @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  score         Float
+  createdAt     DateTime @default(now())
+
+  @@index([opportunityId, createdAt])
+  @@index([opportunityId])
+}
+
+// ==================== 提醒 ====================
+
+enum AlertType {
+  HIGH_SCORE
+  DEADLINE
+  TREND_CHANGE
+  NEW_OPPORTUNITY
+}
+
+model Alert {
+  id            String   @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  type          AlertType
+  message       String   @db.Text
+  isRead        Boolean  @default(false)
+  isPushed      Boolean  @default(false) // 是否已推送到QQ
+  createdAt     DateTime @default(now())
+
+  @@index([isRead, createdAt])
+  @@index([opportunityId])
+}
+
+// ==================== 扫描记录 ====================
+
+enum ScanStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  RETRYING
+}
+
+model ScanLog {
+  id        String     @id @default(cuid())
+  startedAt DateTime   @default(now())
+  endedAt   DateTime?
+  status    ScanStatus @default(PENDING)
+  totalOpps Int        @default(0)
+  newOpps   Int        @default(0)
+  avgScore  Float?
+  error     String?    @db.Text
+  retryCount Int       @default(0)
+  createdAt DateTime   @default(now())
+}
+
+// ==================== 多语言 ====================
+
+model OpportunityTranslation {
+  id            String @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  locale        String // en, zh, ja, ko
+  title         String
+  subtitle      String?
+  summary       String @db.Text
+  steps         Json?  // 翻译后的步骤
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@unique([opportunityId, locale])
+  @@index([locale])
+}
+
+// ==================== 用户系统（预留） ====================
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  role      String   @default("user") // user | admin
+  locale    String   @default("en")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  favorites Favorite[]
+}
+
+model Favorite {
+  id            String     @id @default(cuid())
+  userId        String
+  user          User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  opportunityId String
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  createdAt     DateTime   @default(now())
+
+  @@unique([userId, opportunityId])
+}
+
+// ==================== 队列任务（BullMQ 配合） ====================
+
+// ==================== 原始信号（Scanner原始数据） ====================
+
+enum SignalSource {
+  GITHUB
+  HACKER_NEWS
+  REDDIT
+  TWITTER
+  PRODUCT_HUNT
+  INDIE_HACKERS
+  COINGECKO
+  GOOGLE_TRENDS
+  RSS
+}
+
+model RawSignal {
+  id          String      @id @default(cuid())
+  source      SignalSource
+  externalId  String?     // 在原始来源的ID
+  title       String
+  summary     String      @db.Text
+  url         String?
+  author      String?
+  tags        String[]
+  metrics     Json?       // {stars, upvotes, comments, mentions}
+  contentHash String      // 三层去重用
+  isProcessed Boolean     @default(false)
+  opportunityId String?   // 关联到的机会
+  opportunity Opportunity? @relation(fields: [opportunityId], references: [id])
+  rawData     Json?       // 原始响应全文（调试用）
+  error       String?     @db.Text
+  createdAt   DateTime    @default(now())
+  processedAt DateTime?
+
+  @@index([source, createdAt])
+  @@index([contentHash])
+  @@index([isProcessed])
+}
+
+// ==================== 生命周期历史 ====================
+
+enum LifecycleStage {
+  EARLY
+  EXPANDING
+  PEAK
+  SATURATED
+  DECLINING
+  DEAD
+}
+
+model OpportunityLifecycleHistory {
+  id            String         @id @default(cuid())
+  opportunityId String
+  opportunity   Opportunity    @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  fromStage     LifecycleStage?
+  toStage       LifecycleStage
+  reason        String?        @db.Text
+  confidence    Float          @default(0.8)
+  createdAt     DateTime       @default(now())
+
+  @@index([opportunityId, createdAt])
+}
+
+// ==================== 分析数据（缓存面板） ====================
+
+model OpportunityAnalytics {
+  id            String   @id @default(cuid())
+  date          DateTime // 聚合日期
+  totalActive   Int      @default(0)
+  totalNew      Int      @default(0)
+  avgScore      Float    @default(0)
+  phaseBreakdown Json    // {"EARLY": 5, "EXPANDING": 3, ...}
+  gapBreakdown   Json    // {"TIME_GAP": 4, ...}
+  topCategories  Json    // ["AI", "SaaS", ...]
+  topTrends     Json     // [{title, score, growth}, ...]
+  createdAt     DateTime @default(now())
+
+  @@unique([date])
+  @@index([date])
+}
+
+// ==================== AI 分析缓存 ====================
+
+model AIAnalysis {
+  id              String   @id @default(cuid())
+  opportunityId   String
+  opportunity     Opportunity @relation(fields: [opportunityId], references: [id], onDelete: Cascade)
+  seoTitle        String?  @db.Text
+  seoDescription  String?  @db.Text
+  opportunitySummary String? @db.Text
+  executionPlan   Json?
+  riskAnalysis    Json?
+  translated      Json?
+  promptTokens    Int      @default(0)
+  completionTokens Int     @default(0)
+  cost            Float    @default(0)
+  createdAt       DateTime @default(now())
+
+  @@unique([opportunityId])
+  @@index([createdAt])
+}
+
+// ==================== 队列任务（BullMQ 配合） ====================
+
+model JobLog {
+  id        String   @id @default(cuid())
+  type      String   // scan | alert | translate | seo
+  status    String   // queued | running | completed | failed
+  payload   Json?
+  result    Json?
+  error     String?  @db.Text
+  startedAt DateTime?
+  endedAt   DateTime?
+  createdAt DateTime @default(now())
+}

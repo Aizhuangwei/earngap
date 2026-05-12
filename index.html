@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="site_title">EarnGap · Turn information gaps into alpha</title>
+  <meta name="description" data-i18n="site_desc" content="烁腾云控 · 全球信息差机会扫描引擎。发现信息差，锁定超额收益。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ====== 顶部导航区 ====== -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="logo-icon">EG</div>
+      <div class="logo-text">
+        <span class="text-[#4ADE80]">earn</span><span class="text-gray-500">Gap</span>
+      </div>
+    </div>
+    <div class="topbar-tagline" data-i18n="tagline">Discover the Gap · Catch the Window · Win Before the Crowd</div>
+    <div class="topbar-right">
+      <div class="lang-switch">
+        <a href="#" class="lang-link active" data-lang="en">EN</a>
+        <span class="lang-divider">|</span>
+        <a href="#" class="lang-link" data-lang="zh">中</a>
+      </div>
+      <div class="search-box">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-input" data-i18n-placeholder="search_placeholder" placeholder="Search opportunities..." />
+      </div>
+    </div>
+  </header>
+
+  <!-- ====== 主布局容器 ====== -->
+  <div class="layout-container">
+
+    <!-- ====== 左侧导航 ====== -->
+    <aside class="left-sidebar">
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-item active" data-page="home"><i class="fas fa-th-large"></i><span data-i18n="nav_home">Home</span></a>
+        <a href="#" class="sidebar-item" data-page="discover"><i class="fas fa-bolt"></i><span data-i18n="nav_discover">Discover</span></a>
+        <a href="#" class="sidebar-item" data-page="track"><i class="fas fa-crosshairs"></i><span data-i18n="nav_track">Track</span></a>
+        <a href="#" class="sidebar-item" data-page="reports"><i class="fas fa-chart-pie"></i><span data-i18n="nav_reports">Reports</span></a>
+        <a href="#" class="sidebar-item" data-page="methodology"><i class="fas fa-book"></i><span data-i18n="nav_method">Methodology</span></a>
+        <a href="#" class="sidebar-item" data-page="about"><i class="fas fa-info-circle"></i><span data-i18n="nav_about">About</span></a>
+      </nav>
+      <div class="sidebar-partners-grid">
+        <a href="https://google.com" target="_blank" class="partner-icon"><i class="fab fa-google"></i> Google</a>
+        <a href="https://github.com" target="_blank" class="partner-icon"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://x.com" target="_blank" class="partner-icon"><i class="fab fa-x-twitter"></i> X</a>
+        <a href="https://openai.com" target="_blank" class="partner-icon"><i class="fas fa-microchip"></i> OpenAI</a>
+        <a href="https://deepseek.com" target="_blank" class="partner-icon"><i class="fas fa-brain"></i> DeepSeek</a>
+        <a href="https://vercel.com" target="_blank" class="partner-icon"><i class="fas fa-cloud"></i> Vercel</a>
+        <a href="https://react.dev" target="_blank" class="partner-icon"><i class="fab fa-react"></i> React</a>
+        <a href="https://tailwindcss.com" target="_blank" class="partner-icon"><i class="fab fa-css3-alt"></i> Tailwind</a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="sidebar-online">
+          <span class="online-dot"></span>
+          <span data-i18n="system_online">System Online</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====== 中间主内容区 ====== -->
+    <main class="main-area">
+
+      <!-- 首页内容 -->
+      <div id="page-home">
+        <!-- 数据概览区 -->
+        <section class="overview-section">
+          <div class="overview-card">
+            <div class="overview-label" data-i18n="ov_today">Today's Total</div>
+            <div class="overview-value" id="today-count"><span class="count-num">0</span></div>
+            <div class="overview-change up"><span class="change-label" data-i18n="vs_yesterday">vs yesterday</span> <span class="change-val" id="delta-total">+0%</span></div>
+          </div>
+          <div class="overview-card">
+            <div class="overview-label" data-i18n="ov_high">High Score</div>
+            <div class="overview-value accent-green" id="high-count"><span class="count-num">0</span></div>
+            <div class="overview-change up"><span class="change-label" data-i18n="vs_yesterday">vs yesterday</span> <span class="change-val" id="delta-high">+0%</span></div>
+          </div>
+          <div class="overview-card">
+            <div class="overview-label" data-i18n="ov_new">New Today</div>
+            <div class="overview-value accent-cyan" id="new-count"><span class="count-num">0</span></div>
+            <div class="overview-change up"><span class="change-label" data-i18n="vs_yesterday">vs yesterday</span> <span class="change-val" id="delta-new">+0%</span></div>
+          </div>
+          <div class="overview-card">
+            <div class="overview-label" data-i18n="ov_avg">Avg Score</div>
+            <div class="overview-value accent-yellow" id="avg-score"><span class="count-num">0</span></div>
+            <div class="overview-change neutral"><span class="change-label" data-i18n="vs_yesterday">vs yesterday</span> <span class="change-val" id="delta-avg">0</span></div>
+          </div>
+          <div class="overview-card">
+            <div class="overview-label" data-i18n="ov_alerts">High Alerts</div>
+            <div class="overview-value accent-red" id="high-alert"><span class="count-num">0</span></div>
+            <div class="overview-change down"><span class="change-label" data-i18n="vs_yesterday">vs yesterday</span> <span class="change-val" id="delta-alert">0%</span></div>
+          </div>
+        </section>
+
+        <!-- Top 3 高分区 -->
+        <section class="top3-section">
+          <div class="section-header">
+            <h2><i class="fas fa-crown text-[#FBBF24]"></i> <span data-i18n="top3_title">Top 3 Opportunities</span></h2>
+            <a href="#" class="section-more" onclick="switchToTrack(event)"><span data-i18n="view_all">View All</span> <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="top3-grid" id="top3-grid"></div>
+        </section>
+
+        <!-- 广告位 -->
+        <section class="ad-section">
+          <div class="section-header">
+            <h2><i class="fas fa-ad text-[#22D3EE]"></i> <span data-i18n="ad_title">Recommended Products</span></h2>
+          </div>
+          <div class="ad-grid" id="ad-grid"></div>
+        </section>
+      </div>
+
+      <!-- 机会发现页 -->
+      <div id="page-discover" class="page-hidden">
+        <div class="section-header">
+          <h2><i class="fas fa-bolt text-[#4ADE80]"></i> <span data-i18n="discover_title">Opportunity Discovery</span></h2>
+        </div>
+        <p class="text-gray-500 text-sm mb-4" data-i18n="discover_desc">Real-time scanning results from 8 global sources. New signals appear as they are detected.</p>
+        <div class="discover-feed" id="discover-feed"></div>
+      </div>
+
+      <!-- 机会追踪页 -->
+      <div id="page-track" class="page-hidden"></div>
+
+      <!-- 报告中心 -->
+      <div id="page-reports" class="page-hidden">
+        <div class="section-header">
+          <h2><i class="fas fa-chart-pie text-[#FBBF24]"></i> <span data-i18n="reports_title">Reports Center</span></h2>
+        </div>
+        <p class="text-gray-500 text-sm mb-4" data-i18n="reports_desc">Weekly and monthly alpha intelligence reports. Coming soon.</p>
+        <div class="coming-soon"><i class="fas fa-tools text-4xl text-gray-600"></i><p class="mt-3 text-gray-500" data-i18n="coming_soon">Reports are being prepared. Check back later.</p></div>
+      </div>
+
+      <!-- 方法论 -->
+      <div id="page-methodology" class="page-hidden">
+        <div class="section-header">
+          <h2><i class="fas fa-book text-[#22D3EE]"></i> <span data-i18n="method_title">Methodology</span></h2>
+        </div>
+        <div class="method-content">
+          <div class="method-section"><h3 data-i18n="method_scoring">7-Dimension Scoring System</h3><p data-i18n="method_scoring_desc">Each opportunity is scored across 7 dimensions: Confidence, Timeliness, Executability, Asymmetry, Market Heat, Competition, and Scalability. The overall score (1-10) determines the conviction level.</p></div>
+          <div class="method-section"><h3 data-i18n="method_window">Opportunity Window</h3><p data-i18n="method_window_desc">We classify each opportunity by its likely execution window: <7 days (immediate), 7-30 days (short-term), 30-90 days (medium-term), and >90 days (long-term). Windows are updated daily based on market conditions.</p></div>
+          <div class="method-section"><h3 data-i18n="method_sources">8 Global Sources</h3><p data-i18n="method_sources_desc">GitHub, Hacker News, Reddit, Product Hunt, 36Kr, VC Blogs, ArXiv, Twitter/X — scanned 24/7 for early signals before they hit mainstream.</p></div>
+        </div>
+      </div>
+
+      <!-- 关于我们 -->
+      <div id="page-about" class="page-hidden">
+        <div class="section-header">
+          <h2><i class="fas fa-info-circle text-[#4ADE80]"></i> <span data-i18n="about_title">About EarnGap</span></h2>
+        </div>
+        <div class="about-content">
+          <div class="method-section"><h3 data-i18n="about_mission">Our Mission</h3><p data-i18n="about_mission_desc">EarnGap is an automated opportunity intelligence engine developed by 烁腾云控 (Shuoteng Cloud Control). We scan global markets 24/7 to identify information asymmetries that can be converted into actionable alpha.</p></div>
+          <div class="method-section"><h3 data-i18n="about_auto">Fully Automated Pipeline</h3><p data-i18n="about_auto_desc">Every day at 06:00 Beijing time, our system automatically: scans 8+ global sources, cleans and classifies signals, scores each opportunity across 7 dimensions, and publishes the results. No human intervention needed.</p></div>
+          <div class="method-section"><h3 data-i18n="about_disclaimer">Disclaimer</h3><p class="text-gray-500" data-i18n="about_disclaimer_desc">All information provided is for reference only. Please exercise your own judgment before making any investment decisions. Past performance does not guarantee future results.</p></div>
+        </div>
+      </div>
+
+      <!-- 追踪面板（查看全部内） -->
+      <div id="track-panel" class="page-hidden">
+        <div style="margin-bottom:12px;">
+          <a href="#" onclick="switchToHome(event)" style="font-size:15px;color:#6B6F82;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">
+            <i class="fas fa-arrow-left"></i> <span data-i18n="back_home">Back to Home</span>
+          </a>
+        </div>
+        <section class="filter-section">
+          <div class="filter-group"><label data-i18n="filter_cycle">Cycle</label><select id="filter-cycle"><option data-i18n="all">All</option><option data-i18n="today">Today</option><option data-i18n="week">Week</option><option data-i18n="month">Month</option></select></div>
+          <div class="filter-group"><label data-i18n="filter_type">Gap Type</label><select id="filter-type"><option data-i18n="all">All</option><option>时间差</option><option>知识差</option><option>平台套利</option><option>价格差</option><option>语言差</option></select></div>
+          <div class="filter-group"><label data-i18n="filter_score">Min Score</label><select id="filter-score"><option data-i18n="any">Any</option><option>7+</option><option>8+</option><option>9+</option></select></div>
+          <div class="filter-group"><label data-i18n="filter_range">Time Range</label><select id="filter-days"><option data-i18n="all">All</option><option>24h</option><option>3d</option><option>7d</option></select></div>
+          <div class="filter-group"><label data-i18n="filter_sort">Sort</label><select id="filter-sort"><option data-i18n="sort_score">Score</option><option data-i18n="sort_new">Newest</option><option data-i18n="sort_window">Window</option></select></div>
+          <button class="filter-btn" onclick="applyFilter()"><i class="fas fa-sliders-h"></i> <span data-i18n="filter_btn">Filter</span></button>
+        </section>
+        <section class="main-content" id="opportunity-list"></section>
+      </div>
+
+    </main>
+
+    <!-- ====== 右侧信息区 ====== -->
+    <aside class="right-sidebar">
+      <div class="widget">
+        <h4 class="widget-title"><i class="fas fa-bell text-[#EF4444]"></i> <span data-i18n="alert_title">High Score Alerts</span></h4>
+        <div class="alert-list" id="alert-list"></div>
+      </div>
+      <div class="widget">
+        <h4 class="widget-title"><i class="fas fa-chart-pie text-[#22D3EE]"></i> <span data-i18n="pie_title">Score Distribution</span></h4>
+        <div class="pie-chart-container">
+          <canvas id="pie-chart" width="200" height="200"></canvas>
+          <div class="pie-legend" id="pie-legend"></div>
+        </div>
+      </div>
+      <div class="widget">
+        <h4 class="widget-title"><i class="fas fa-chart-bar text-[#FBBF24]"></i> <span data-i18n="bar_title">Gap Distribution</span></h4>
+        <div id="bar-chart" class="bar-chart"></div>
+      </div>
+      <div class="widget">
+        <h4 class="widget-title"><i class="fas fa-history text-gray-500"></i> <span data-i18n="scan_title">Recent Scans</span></h4>
+        <div class="scan-log" id="scan-log"></div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- ====== 页脚区 ====== -->
+  <footer class="site-footer">
+    <div class="footer-center-wrapper">
+      <div class="footer-links">
+        <a href="#" data-i18n="privacy">Privacy</a>
+        <a href="#" data-i18n="terms">Terms</a>
+        <a href="#" data-i18n="about">About</a>
+        <a href="#" data-i18n="help">Help</a>
+      </div>
+      <div class="footer-disclaimer" data-i18n="disclaimer">© 2026 stykai · AI-generated intelligence. Verify before investing.</div>
+    </div>
+    <div class="footer-subscribe">
+      <input type="email" class="subscribe-input" data-i18n-placeholder="subscribe_placeholder" placeholder="Subscribe to alpha brief..." />
+      <button class="subscribe-btn" data-i18n="subscribe">Subscribe</button>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

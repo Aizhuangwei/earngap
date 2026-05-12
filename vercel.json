@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "buildCommand": false,
+  "outputDirectory": ".",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" },
+        { "key": "Content-Type", "value": "application/json" }
+      ]
+    }
+  ]
+}

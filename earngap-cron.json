@@ -1,0 +1,8 @@
+{
+  "id": "earngap-daily-scan",
+  "schedule": "0 6 * * *",
+  "timezone": "Asia/Shanghai",
+  "command": "bash /home/Aizhuangwei/.openclaw/workspace/earngap-v2/scripts/scan-and-deploy.sh",
+  "description": "EarnGap 每天06:00自动扫描全球信息差机会",
+  "enabled": true
+}

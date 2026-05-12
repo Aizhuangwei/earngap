@@ -299,7 +299,7 @@ function switchPage(pageId) {
   if (activeItem) activeItem.classList.add('active');
 
 // ====== 初始化 ======
-async function init() {
+async function bootstrap() {
   await loadData();
   setLang('en');
   if (DATA.raw) refreshAll();
@@ -328,10 +328,4 @@ async function init() {
   }
 }
 
-(function() {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
+document.addEventListener("DOMContentLoaded", bootstrap);

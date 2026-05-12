@@ -1,9 +1,9 @@
 {
   "meta": {
     "version": "1.0",
-    "generated_at": "2026-05-12T06:00:00+08:00",
+    "generated_at": "2026-05-12T19:45:56+08:00",
     "source": "烁腾云控 · EarnGap 自动扫描引擎",
-    "total_opportunities": 20
+    "total_opportunities": 10
   },
   "stats": {
     "today_total": 256,
@@ -18,164 +18,864 @@
     "delta_alert": -2.1
   },
   "gap_distribution": [
-    { "label_cn": "时间差", "label_en": "Time Gap", "value": 88 },
-    { "label_cn": "知识差", "label_en": "Knowledge Gap", "value": 72 },
-    { "label_cn": "平台套利", "label_en": "Platform Arb", "value": 65 },
-    { "label_cn": "价格差", "label_en": "Price Gap", "value": 91 },
-    { "label_cn": "语言差", "label_en": "Language Gap", "value": 43 },
-    { "label_cn": "区域差", "label_en": "Region Gap", "value": 57 }
+    {
+      "label_cn": "时间差",
+      "label_en": "Time Gap",
+      "value": 88
+    },
+    {
+      "label_cn": "知识差",
+      "label_en": "Knowledge Gap",
+      "value": 72
+    },
+    {
+      "label_cn": "平台套利",
+      "label_en": "Platform Arb",
+      "value": 65
+    },
+    {
+      "label_cn": "价格差",
+      "label_en": "Price Gap",
+      "value": 91
+    },
+    {
+      "label_cn": "语言差",
+      "label_en": "Language Gap",
+      "value": 43
+    },
+    {
+      "label_cn": "区域差",
+      "label_en": "Region Gap",
+      "value": 57
+    }
   ],
   "pie_distribution": [
-    { "label_cn": "高分 (9-10)", "label_en": "High (9-10)", "value": 10 },
-    { "label_cn": "中高 (7-8.9)", "label_en": "Mid-High (7-8.9)", "value": 25 },
-    { "label_cn": "中等 (5-6.9)", "label_en": "Medium (5-6.9)", "value": 26 },
-    { "label_cn": "低分 (<5)", "label_en": "Low (<5)", "value": 28 }
+    {
+      "label_cn": "高分 (9-10)",
+      "label_en": "High (9-10)",
+      "value": 10
+    },
+    {
+      "label_cn": "中高 (7-8.9)",
+      "label_en": "Mid-High (7-8.9)",
+      "value": 25
+    },
+    {
+      "label_cn": "中等 (5-6.9)",
+      "label_en": "Medium (5-6.9)",
+      "value": 26
+    },
+    {
+      "label_cn": "低分 (<5)",
+      "label_en": "Low (<5)",
+      "value": 28
+    }
   ],
   "alerts": [
-    { "text_cn": "「平台规则变化」— 新广告位开放，72h 首轮窗口", "text_en": "Platform rule change — New ad slot open, 72h first-mover window", "time": "2 分钟前" },
-    { "text_cn": "「跨境支付差价」已逼近执行阈值，立即评估", "text_en": "Cross-border payment spread approaching execution threshold, evaluate now", "time": "8 分钟前" },
-    { "text_cn": "「AI Agent 工具」多平台讨论量激增 340%", "text_en": "AI Agent tool discussion volume surged 340% across platforms", "time": "12 分钟前" }
+    {
+      "text_cn": "「平台规则变化」— 新广告位开放，72h 首轮窗口",
+      "text_en": "Platform rule change — New ad slot open, 72h first-mover window",
+      "time": "2 分钟前"
+    },
+    {
+      "text_cn": "「跨境支付差价」已逼近执行阈值，立即评估",
+      "text_en": "Cross-border payment spread approaching execution threshold, evaluate now",
+      "time": "8 分钟前"
+    },
+    {
+      "text_cn": "「AI Agent 工具」多平台讨论量激增 340%",
+      "text_en": "AI Agent tool discussion volume surged 340% across platforms",
+      "time": "12 分钟前"
+    }
   ],
   "opportunities": [
     {
-      "id": 1, "is_new": true,
-      "title_cn": "AI Agent 工作流工具在 HN 爆火 — 中国市场时间窗口机会", "title_en": "AI Agent workflow tool goes viral on HN — Time gap opportunity for CN market",
-      "type_cn": "时间差", "type_en": "Time Gap", "score": 8.8,
-      "tag_cn": ["AI", "工具", "跨境", "时间窗口"], "tag_en": ["AI", "Tool", "Cross-border", "Window"],
-      "window_cn": "7-30 天", "window_en": "7-30 days", "action_cn": "立即执行", "action_en": "Execute Now",
-      "scores": { "cn": { "可信度": 9, "时效性": 8, "执行力": 7, "不对称性": 9, "市场热度": 6, "竞争程度": 7, "可扩展性": 8 }, "en": { "Confidence": 9, "Timeliness": 8, "Executability": 7, "Asymmetry": 9, "Market Heat": 6, "Competition": 7, "Scalability": 8 } },
-      "decisions_cn": ["立即评估中国区落地可行性", "确认英文工具本地化成本", "分析国内竞争对手状态", "制定 72h 行动计划"],
-      "decisions_en": ["Assess CN market feasibility", "Confirm localization cost", "Analyze domestic competitors", "Set 72h action plan"],
-      "path_cn": ["信号验证", "竞品分析", "MVP 设计", "本地化测试", "上线推广", "持续监控"],
-      "path_en": ["Signal verify", "Competitor analysis", "MVP design", "Localization test", "Launch", "Monitor"],
+      "id": 1,
+      "is_new": true,
+      "title_cn": "AI Agent 工作流工具在 HN 爆火 — 中国市场时间窗口机会",
+      "title_en": "AI Agent workflow tool goes viral on HN — Time gap opportunity for CN market",
+      "type_cn": "时间差",
+      "type_en": "Time Gap",
+      "score": 8.8,
+      "tag_cn": [
+        "AI",
+        "工具",
+        "跨境",
+        "时间窗口"
+      ],
+      "tag_en": [
+        "AI",
+        "Tool",
+        "Cross-border",
+        "Window"
+      ],
+      "window_cn": "7-30 天",
+      "window_en": "7-30 days",
+      "action_cn": "立即执行",
+      "action_en": "Execute Now",
+      "scores": {
+        "cn": {
+          "可信度": 9,
+          "时效性": 8,
+          "执行力": 7,
+          "不对称性": 9,
+          "市场热度": 6,
+          "竞争程度": 7,
+          "可扩展性": 8
+        },
+        "en": {
+          "Confidence": 9,
+          "Timeliness": 8,
+          "Executability": 7,
+          "Asymmetry": 9,
+          "Market Heat": 6,
+          "Competition": 7,
+          "Scalability": 8
+        }
+      },
+      "decisions_cn": [
+        "立即评估中国区落地可行性",
+        "确认英文工具本地化成本",
+        "分析国内竞争对手状态",
+        "制定 72h 行动计划"
+      ],
+      "decisions_en": [
+        "Assess CN market feasibility",
+        "Confirm localization cost",
+        "Analyze domestic competitors",
+        "Set 72h action plan"
+      ],
+      "path_cn": [
+        "信号验证",
+        "竞品分析",
+        "MVP 设计",
+        "本地化测试",
+        "上线推广",
+        "持续监控"
+      ],
+      "path_en": [
+        "Signal verify",
+        "Competitor analysis",
+        "MVP design",
+        "Localization test",
+        "Launch",
+        "Monitor"
+      ],
       "created_at": "2026-05-12T00:00:00Z"
     },
     {
-      "id": 2, "is_new": true,
-      "title_cn": "跨境支付 API 费率差检测 — 30bp 差价可执行", "title_en": "Cross-border payment API rate gap detected — 30bps spread actionable",
-      "type_cn": "价格差", "type_en": "Price Gap", "score": 8.5,
-      "tag_cn": ["支付", "跨境", "API", "套利"], "tag_en": ["Payment", "Cross-border", "API", "Arbitrage"],
-      "window_cn": "< 7 天", "window_en": "< 7 days", "action_cn": "立即执行", "action_en": "Execute Now",
-      "scores": { "cn": { "可信度": 8, "时效性": 9, "执行力": 8, "不对称性": 8, "市场热度": 7, "竞争程度": 6, "可扩展性": 7 }, "en": { "Confidence": 8, "Timeliness": 9, "Executability": 8, "Asymmetry": 8, "Market Heat": 7, "Competition": 6, "Scalability": 7 } },
-      "decisions_cn": ["确认差价是否可以稳定套利", "测试 API 调用稳定性", "评估汇率波动风险", "启动极小规模验证"],
-      "decisions_en": ["Confirm spread stability", "Test API reliability", "Assess FX risk", "Start micro-scale validation"],
-      "path_cn": ["差价验证", "API 测试", "资金方案", "最小化测试", "规模放大", "退出策略"],
-      "path_en": ["Spread verify", "API test", "Funding plan", "Mini test", "Scale up", "Exit strategy"],
+      "id": 2,
+      "is_new": true,
+      "title_cn": "跨境支付 API 费率差检测 — 30bp 差价可执行",
+      "title_en": "Cross-border payment API rate gap detected — 30bps spread actionable",
+      "type_cn": "价格差",
+      "type_en": "Price Gap",
+      "score": 8.5,
+      "tag_cn": [
+        "支付",
+        "跨境",
+        "API",
+        "套利"
+      ],
+      "tag_en": [
+        "Payment",
+        "Cross-border",
+        "API",
+        "Arbitrage"
+      ],
+      "window_cn": "< 7 天",
+      "window_en": "< 7 days",
+      "action_cn": "立即执行",
+      "action_en": "Execute Now",
+      "scores": {
+        "cn": {
+          "可信度": 8,
+          "时效性": 9,
+          "执行力": 8,
+          "不对称性": 8,
+          "市场热度": 7,
+          "竞争程度": 6,
+          "可扩展性": 7
+        },
+        "en": {
+          "Confidence": 8,
+          "Timeliness": 9,
+          "Executability": 8,
+          "Asymmetry": 8,
+          "Market Heat": 7,
+          "Competition": 6,
+          "Scalability": 7
+        }
+      },
+      "decisions_cn": [
+        "确认差价是否可以稳定套利",
+        "测试 API 调用稳定性",
+        "评估汇率波动风险",
+        "启动极小规模验证"
+      ],
+      "decisions_en": [
+        "Confirm spread stability",
+        "Test API reliability",
+        "Assess FX risk",
+        "Start micro-scale validation"
+      ],
+      "path_cn": [
+        "差价验证",
+        "API 测试",
+        "资金方案",
+        "最小化测试",
+        "规模放大",
+        "退出策略"
+      ],
+      "path_en": [
+        "Spread verify",
+        "API test",
+        "Funding plan",
+        "Mini test",
+        "Scale up",
+        "Exit strategy"
+      ],
       "created_at": "2026-05-12T00:00:00Z"
     },
     {
-      "id": 3, "is_new": true,
-      "title_cn": "GitHub 趋势：无代码 BI 工具 — 企业市场知识差红利", "title_en": "GitHub trending: no-code BI tool — Knowledge gap in enterprise market",
-      "type_cn": "知识差", "type_en": "Knowledge Gap", "score": 8.2,
-      "tag_cn": ["BI", "无代码", "开源", "企业服务"], "tag_en": ["BI", "No-code", "Open Source", "Enterprise"],
-      "window_cn": "30-90 天", "window_en": "30-90 days", "action_cn": "准备入场", "action_en": "Prepare Entry",
-      "scores": { "cn": { "可信度": 7, "时效性": 6, "执行力": 8, "不对称性": 8, "市场热度": 9, "竞争程度": 7, "可扩展性": 9 }, "en": { "Confidence": 7, "Timeliness": 6, "Executability": 8, "Asymmetry": 8, "Market Heat": 9, "Competition": 7, "Scalability": 9 } },
-      "decisions_cn": ["调研国内竞品分布", "确认开源许可证限制", "制定产品差异化方案", "准备推广渠道资源"],
-      "decisions_en": ["Research local competitors", "Verify license restrictions", "Plan differentiation", "Prepare marketing channels"],
-      "path_cn": ["市场调研", "技术评估", "产品设计", "社区运营", "增长测试", "持续迭代"],
-      "path_en": ["Market research", "Tech evaluation", "Product design", "Community ops", "Growth test", "Iterate"],
+      "id": 3,
+      "is_new": true,
+      "title_cn": "GitHub 趋势：无代码 BI 工具 — 企业市场知识差红利",
+      "title_en": "GitHub trending: no-code BI tool — Knowledge gap in enterprise market",
+      "type_cn": "知识差",
+      "type_en": "Knowledge Gap",
+      "score": 8.2,
+      "tag_cn": [
+        "BI",
+        "无代码",
+        "开源",
+        "企业服务"
+      ],
+      "tag_en": [
+        "BI",
+        "No-code",
+        "Open Source",
+        "Enterprise"
+      ],
+      "window_cn": "30-90 天",
+      "window_en": "30-90 days",
+      "action_cn": "准备入场",
+      "action_en": "Prepare Entry",
+      "scores": {
+        "cn": {
+          "可信度": 7,
+          "时效性": 6,
+          "执行力": 8,
+          "不对称性": 8,
+          "市场热度": 9,
+          "竞争程度": 7,
+          "可扩展性": 9
+        },
+        "en": {
+          "Confidence": 7,
+          "Timeliness": 6,
+          "Executability": 8,
+          "Asymmetry": 8,
+          "Market Heat": 9,
+          "Competition": 7,
+          "Scalability": 9
+        }
+      },
+      "decisions_cn": [
+        "调研国内竞品分布",
+        "确认开源许可证限制",
+        "制定产品差异化方案",
+        "准备推广渠道资源"
+      ],
+      "decisions_en": [
+        "Research local competitors",
+        "Verify license restrictions",
+        "Plan differentiation",
+        "Prepare marketing channels"
+      ],
+      "path_cn": [
+        "市场调研",
+        "技术评估",
+        "产品设计",
+        "社区运营",
+        "增长测试",
+        "持续迭代"
+      ],
+      "path_en": [
+        "Market research",
+        "Tech evaluation",
+        "Product design",
+        "Community ops",
+        "Growth test",
+        "Iterate"
+      ],
       "created_at": "2026-05-12T00:00:00Z"
     },
     {
-      "id": 4, "is_new": false,
-      "title_cn": "SaaS 定价平价差：美国 vs 亚太 — 3 倍价差，90 天窗口", "title_en": "SaaS pricing parity gap: US vs APAC — 3x price gap, 90d window",
-      "type_cn": "价格差", "type_en": "Price Gap", "score": 7.9,
-      "tag_cn": ["SaaS", "定价", "跨境"], "tag_en": ["SaaS", "Pricing", "Cross-border"],
-      "window_cn": "30-90 天", "window_en": "30-90 days", "action_cn": "密切监控", "action_en": "Monitor Closely",
-      "scores": { "cn": { "可信度": 8, "时效性": 7, "执行力": 8, "不对称性": 9, "市场热度": 6, "竞争程度": 5, "可扩展性": 8 }, "en": { "Confidence": 8, "Timeliness": 7, "Executability": 8, "Asymmetry": 9, "Market Heat": 6, "Competition": 5, "Scalability": 8 } },
-      "decisions_cn": ["确认关键 SaaS 产品价差", "评估套利工具成熟度", "准备跨境支付方案", "监控窗口关闭信号"],
-      "decisions_en": ["Confirm key SaaS price gaps", "Evaluate arb tools readiness", "Prepare cross-border payment", "Monitor window signals"],
-      "path_cn": ["价差确认", "工具准备", "支付通道", "首单测试", "规模运作", "定期复盘"],
-      "path_en": ["Gap confirm", "Tool prep", "Payment setup", "First order", "Scale", "Review"],
+      "id": 4,
+      "is_new": false,
+      "title_cn": "SaaS 定价平价差：美国 vs 亚太 — 3 倍价差，90 天窗口",
+      "title_en": "SaaS pricing parity gap: US vs APAC — 3x price gap, 90d window",
+      "type_cn": "价格差",
+      "type_en": "Price Gap",
+      "score": 7.9,
+      "tag_cn": [
+        "SaaS",
+        "定价",
+        "跨境"
+      ],
+      "tag_en": [
+        "SaaS",
+        "Pricing",
+        "Cross-border"
+      ],
+      "window_cn": "30-90 天",
+      "window_en": "30-90 days",
+      "action_cn": "密切监控",
+      "action_en": "Monitor Closely",
+      "scores": {
+        "cn": {
+          "可信度": 8,
+          "时效性": 7,
+          "执行力": 8,
+          "不对称性": 9,
+          "市场热度": 6,
+          "竞争程度": 5,
+          "可扩展性": 8
+        },
+        "en": {
+          "Confidence": 8,
+          "Timeliness": 7,
+          "Executability": 8,
+          "Asymmetry": 9,
+          "Market Heat": 6,
+          "Competition": 5,
+          "Scalability": 8
+        }
+      },
+      "decisions_cn": [
+        "确认关键 SaaS 产品价差",
+        "评估套利工具成熟度",
+        "准备跨境支付方案",
+        "监控窗口关闭信号"
+      ],
+      "decisions_en": [
+        "Confirm key SaaS price gaps",
+        "Evaluate arb tools readiness",
+        "Prepare cross-border payment",
+        "Monitor window signals"
+      ],
+      "path_cn": [
+        "价差确认",
+        "工具准备",
+        "支付通道",
+        "首单测试",
+        "规模运作",
+        "定期复盘"
+      ],
+      "path_en": [
+        "Gap confirm",
+        "Tool prep",
+        "Payment setup",
+        "First order",
+        "Scale",
+        "Review"
+      ],
       "created_at": "2026-05-11T00:00:00Z"
     },
     {
-      "id": 5, "is_new": false,
-      "title_cn": "新 DTC 品牌在 TikTok Shop 10 倍增长 — 平台套利解锁", "title_en": "New DTC brand 10xing on TikTok Shop — Platform arbitrage unlocked",
-      "type_cn": "平台套利", "type_en": "Platform Arb", "score": 7.6,
-      "tag_cn": ["DTC", "TikTok", "电商", "流量"], "tag_en": ["DTC", "TikTok", "E-commerce", "Traffic"],
-      "window_cn": "7-30 天", "window_en": "7-30 days", "action_cn": "密切监控", "action_en": "Monitor Closely",
-      "scores": { "cn": { "可信度": 7, "时效性": 8, "执行力": 6, "不对称性": 7, "市场热度": 9, "竞争程度": 8, "可扩展性": 8 }, "en": { "Confidence": 7, "Timeliness": 8, "Executability": 6, "Asymmetry": 7, "Market Heat": 9, "Competition": 8, "Scalability": 8 } },
-      "decisions_cn": ["研究爆品选品逻辑", "分析流量来源结构", "评估供应链匹配度", "准备 3 个测试品"],
-      "decisions_en": ["Study winning product logic", "Analyze traffic sources", "Evaluate supply chain fit", "Prepare 3 test products"],
-      "path_cn": ["品类调研", "供应链对接", "选品测试", "流量验证", "放大推广", "品牌沉淀"],
-      "path_en": ["Category research", "Supply chain setup", "Product test", "Traffic verify", "Scale", "Brand build"],
+      "id": 5,
+      "is_new": false,
+      "title_cn": "新 DTC 品牌在 TikTok Shop 10 倍增长 — 平台套利解锁",
+      "title_en": "New DTC brand 10xing on TikTok Shop — Platform arbitrage unlocked",
+      "type_cn": "平台套利",
+      "type_en": "Platform Arb",
+      "score": 7.6,
+      "tag_cn": [
+        "DTC",
+        "TikTok",
+        "电商",
+        "流量"
+      ],
+      "tag_en": [
+        "DTC",
+        "TikTok",
+        "E-commerce",
+        "Traffic"
+      ],
+      "window_cn": "7-30 天",
+      "window_en": "7-30 days",
+      "action_cn": "密切监控",
+      "action_en": "Monitor Closely",
+      "scores": {
+        "cn": {
+          "可信度": 7,
+          "时效性": 8,
+          "执行力": 6,
+          "不对称性": 7,
+          "市场热度": 9,
+          "竞争程度": 8,
+          "可扩展性": 8
+        },
+        "en": {
+          "Confidence": 7,
+          "Timeliness": 8,
+          "Executability": 6,
+          "Asymmetry": 7,
+          "Market Heat": 9,
+          "Competition": 8,
+          "Scalability": 8
+        }
+      },
+      "decisions_cn": [
+        "研究爆品选品逻辑",
+        "分析流量来源结构",
+        "评估供应链匹配度",
+        "准备 3 个测试品"
+      ],
+      "decisions_en": [
+        "Study winning product logic",
+        "Analyze traffic sources",
+        "Evaluate supply chain fit",
+        "Prepare 3 test products"
+      ],
+      "path_cn": [
+        "品类调研",
+        "供应链对接",
+        "选品测试",
+        "流量验证",
+        "放大推广",
+        "品牌沉淀"
+      ],
+      "path_en": [
+        "Category research",
+        "Supply chain setup",
+        "Product test",
+        "Traffic verify",
+        "Scale",
+        "Brand build"
+      ],
       "created_at": "2026-05-11T00:00:00Z"
     },
     {
-      "id": 6, "is_new": true,
-      "title_cn": "微信小程序流量漏洞 — 监管灰色地带即将关闭", "title_en": "WeChat mini-program traffic loophole — Regulatory gray area expiring",
-      "type_cn": "区域差", "type_en": "Region Gap", "score": 7.4,
-      "tag_cn": ["微信", "小程序", "流量", "监管"], "tag_en": ["WeChat", "Mini-program", "Traffic", "Regulatory"],
-      "window_cn": "< 7 天", "window_en": "< 7 days", "action_cn": "预警提醒", "action_en": "Alert",
-      "scores": { "cn": { "可信度": 8, "时效性": 9, "执行力": 6, "不对称性": 8, "市场热度": 5, "竞争程度": 6, "可扩展性": 5 }, "en": { "Confidence": 8, "Timeliness": 9, "Executability": 6, "Asymmetry": 8, "Market Heat": 5, "Competition": 6, "Scalability": 5 } },
-      "decisions_cn": ["确认漏洞具体机制", "评估合规风险等级", "准备快速变现方案", "设置窗口关闭预警"],
-      "decisions_en": ["Confirm loophole mechanism", "Assess compliance risk", "Prepare quick monetization", "Set warning alert"],
-      "path_cn": ["漏洞验证", "合规评估", "方案设计", "快速执行", "退出准备", "复盘总结"],
-      "path_en": ["Verify", "Compliance", "Plan", "Execute", "Exit", "Review"],
+      "id": 6,
+      "is_new": true,
+      "title_cn": "微信小程序流量漏洞 — 监管灰色地带即将关闭",
+      "title_en": "WeChat mini-program traffic loophole — Regulatory gray area expiring",
+      "type_cn": "区域差",
+      "type_en": "Region Gap",
+      "score": 7.4,
+      "tag_cn": [
+        "微信",
+        "小程序",
+        "流量",
+        "监管"
+      ],
+      "tag_en": [
+        "WeChat",
+        "Mini-program",
+        "Traffic",
+        "Regulatory"
+      ],
+      "window_cn": "< 7 天",
+      "window_en": "< 7 days",
+      "action_cn": "预警提醒",
+      "action_en": "Alert",
+      "scores": {
+        "cn": {
+          "可信度": 8,
+          "时效性": 9,
+          "执行力": 6,
+          "不对称性": 8,
+          "市场热度": 5,
+          "竞争程度": 6,
+          "可扩展性": 5
+        },
+        "en": {
+          "Confidence": 8,
+          "Timeliness": 9,
+          "Executability": 6,
+          "Asymmetry": 8,
+          "Market Heat": 5,
+          "Competition": 6,
+          "Scalability": 5
+        }
+      },
+      "decisions_cn": [
+        "确认漏洞具体机制",
+        "评估合规风险等级",
+        "准备快速变现方案",
+        "设置窗口关闭预警"
+      ],
+      "decisions_en": [
+        "Confirm loophole mechanism",
+        "Assess compliance risk",
+        "Prepare quick monetization",
+        "Set warning alert"
+      ],
+      "path_cn": [
+        "漏洞验证",
+        "合规评估",
+        "方案设计",
+        "快速执行",
+        "退出准备",
+        "复盘总结"
+      ],
+      "path_en": [
+        "Verify",
+        "Compliance",
+        "Plan",
+        "Execute",
+        "Exit",
+        "Review"
+      ],
       "created_at": "2026-05-12T00:00:00Z"
     },
     {
-      "id": 7, "is_new": true,
-      "title_cn": "ArXiv 论文：高效 LLM 微调方法 — 知识转移产品化机会", "title_en": "ArXiv paper: efficient LLM finetuning — Knowledge transfer to product",
-      "type_cn": "知识差", "type_en": "Knowledge Gap", "score": 7.2,
-      "tag_cn": ["AI", "LLM", "论文", "开源"], "tag_en": ["AI", "LLM", "Paper", "Open Source"],
-      "window_cn": "30-90 天", "window_en": "30-90 days", "action_cn": "准备入场", "action_en": "Prepare Entry",
-      "scores": { "cn": { "可信度": 6, "时效性": 7, "执行力": 7, "不对称性": 7, "市场热度": 8, "竞争程度": 5, "可扩展性": 9 }, "en": { "Confidence": 6, "Timeliness": 7, "Executability": 7, "Asymmetry": 7, "Market Heat": 8, "Competition": 5, "Scalability": 9 } },
-      "decisions_cn": ["复现论文核心技术", "评估商业化路径", "确认开源协议", "准备产品原型"],
-      "decisions_en": ["Reproduce core tech", "Evaluate commercialization", "Verify license", "Prepare prototype"],
-      "path_cn": ["论文复现", "技术评估", "产品原型", "用户测试", "市场推广", "持续优化"],
-      "path_en": ["Reproduce", "Evaluate", "Prototype", "User test", "Market", "Optimize"],
+      "id": 7,
+      "is_new": true,
+      "title_cn": "ArXiv 论文：高效 LLM 微调方法 — 知识转移产品化机会",
+      "title_en": "ArXiv paper: efficient LLM finetuning — Knowledge transfer to product",
+      "type_cn": "知识差",
+      "type_en": "Knowledge Gap",
+      "score": 7.2,
+      "tag_cn": [
+        "AI",
+        "LLM",
+        "论文",
+        "开源"
+      ],
+      "tag_en": [
+        "AI",
+        "LLM",
+        "Paper",
+        "Open Source"
+      ],
+      "window_cn": "30-90 天",
+      "window_en": "30-90 days",
+      "action_cn": "准备入场",
+      "action_en": "Prepare Entry",
+      "scores": {
+        "cn": {
+          "可信度": 6,
+          "时效性": 7,
+          "执行力": 7,
+          "不对称性": 7,
+          "市场热度": 8,
+          "竞争程度": 5,
+          "可扩展性": 9
+        },
+        "en": {
+          "Confidence": 6,
+          "Timeliness": 7,
+          "Executability": 7,
+          "Asymmetry": 7,
+          "Market Heat": 8,
+          "Competition": 5,
+          "Scalability": 9
+        }
+      },
+      "decisions_cn": [
+        "复现论文核心技术",
+        "评估商业化路径",
+        "确认开源协议",
+        "准备产品原型"
+      ],
+      "decisions_en": [
+        "Reproduce core tech",
+        "Evaluate commercialization",
+        "Verify license",
+        "Prepare prototype"
+      ],
+      "path_cn": [
+        "论文复现",
+        "技术评估",
+        "产品原型",
+        "用户测试",
+        "市场推广",
+        "持续优化"
+      ],
+      "path_en": [
+        "Reproduce",
+        "Evaluate",
+        "Prototype",
+        "User test",
+        "Market",
+        "Optimize"
+      ],
       "created_at": "2026-05-12T00:00:00Z"
     },
     {
-      "id": 8, "is_new": false,
-      "title_cn": "海外 SaaS 缺乏中国竞品 — 语言差机会窗口", "title_en": "Overseas service lacking Chinese competitor — Language gap play",
-      "type_cn": "语言差", "type_en": "Language Gap", "score": 7.0,
-      "tag_cn": ["SaaS", "语言", "本地化", "蓝海"], "tag_en": ["SaaS", "Language", "Localization", "Blue Ocean"],
-      "window_cn": "> 90 天", "window_en": "> 90 days", "action_cn": "准备入场", "action_en": "Prepare Entry",
-      "scores": { "cn": { "可信度": 7, "时效性": 5, "执行力": 7, "不对称性": 8, "市场热度": 5, "竞争程度": 4, "可扩展性": 8 }, "en": { "Confidence": 7, "Timeliness": 5, "Executability": 7, "Asymmetry": 8, "Market Heat": 5, "Competition": 4, "Scalability": 8 } },
-      "decisions_cn": ["筛选 5 个目标海外工具", "评估本地化投入产出比", "确定首批功能范围", "准备双语言产品方案"],
-      "decisions_en": ["Shortlist 5 overseas tools", "Evaluate ROI of localization", "Define MVP scope", "Prepare bilingual product"],
-      "path_cn": ["产品筛选", "需求分析", "本地化开发", "种子用户", "增长运营", "迭代优化"],
-      "path_en": ["Selection", "Analysis", "Develop", "Seed users", "Growth", "Iterate"],
+      "id": 8,
+      "is_new": false,
+      "title_cn": "海外 SaaS 缺乏中国竞品 — 语言差机会窗口",
+      "title_en": "Overseas service lacking Chinese competitor — Language gap play",
+      "type_cn": "语言差",
+      "type_en": "Language Gap",
+      "score": 7.0,
+      "tag_cn": [
+        "SaaS",
+        "语言",
+        "本地化",
+        "蓝海"
+      ],
+      "tag_en": [
+        "SaaS",
+        "Language",
+        "Localization",
+        "Blue Ocean"
+      ],
+      "window_cn": "> 90 天",
+      "window_en": "> 90 days",
+      "action_cn": "准备入场",
+      "action_en": "Prepare Entry",
+      "scores": {
+        "cn": {
+          "可信度": 7,
+          "时效性": 5,
+          "执行力": 7,
+          "不对称性": 8,
+          "市场热度": 5,
+          "竞争程度": 4,
+          "可扩展性": 8
+        },
+        "en": {
+          "Confidence": 7,
+          "Timeliness": 5,
+          "Executability": 7,
+          "Asymmetry": 8,
+          "Market Heat": 5,
+          "Competition": 4,
+          "Scalability": 8
+        }
+      },
+      "decisions_cn": [
+        "筛选 5 个目标海外工具",
+        "评估本地化投入产出比",
+        "确定首批功能范围",
+        "准备双语言产品方案"
+      ],
+      "decisions_en": [
+        "Shortlist 5 overseas tools",
+        "Evaluate ROI of localization",
+        "Define MVP scope",
+        "Prepare bilingual product"
+      ],
+      "path_cn": [
+        "产品筛选",
+        "需求分析",
+        "本地化开发",
+        "种子用户",
+        "增长运营",
+        "迭代优化"
+      ],
+      "path_en": [
+        "Selection",
+        "Analysis",
+        "Develop",
+        "Seed users",
+        "Growth",
+        "Iterate"
+      ],
       "created_at": "2026-05-11T00:00:00Z"
     },
     {
-      "id": 9, "is_new": false,
-      "title_cn": "平台新联盟营销层级推出 — 先发优势窗口", "title_en": "Platform new affiliate tier launched — First-mover advantage",
-      "type_cn": "平台套利", "type_en": "Platform Arb", "score": 6.8,
-      "tag_cn": ["联盟营销", "平台", "流量", "先发"], "tag_en": ["Affiliate", "Platform", "Traffic", "First-mover"],
-      "window_cn": "7-30 天", "window_en": "7-30 days", "action_cn": "密切监控", "action_en": "Monitor Closely",
-      "scores": { "cn": { "可信度": 9, "时效性": 8, "执行力": 6, "不对称性": 6, "市场热度": 6, "竞争程度": 5, "可扩展性": 6 }, "en": { "Confidence": 9, "Timeliness": 8, "Executability": 6, "Asymmetry": 6, "Market Heat": 6, "Competition": 5, "Scalability": 6 } },
-      "decisions_cn": ["研究新层级规则细节", "对比旧政策差异", "准备快速入驻方案", "监控竞品反应"],
-      "decisions_en": ["Study new tier rules", "Compare with old policy", "Prepare fast onboarding", "Monitor competitor moves"],
-      "path_cn": ["规则解读", "入驻准备", "流量导入", "效果优化", "方案复制", "持续放大"],
-      "path_en": ["Rule analysis", "Onboarding", "Traffic", "Optimize", "Copy", "Scale"],
+      "id": 9,
+      "is_new": false,
+      "title_cn": "平台新联盟营销层级推出 — 先发优势窗口",
+      "title_en": "Platform new affiliate tier launched — First-mover advantage",
+      "type_cn": "平台套利",
+      "type_en": "Platform Arb",
+      "score": 6.8,
+      "tag_cn": [
+        "联盟营销",
+        "平台",
+        "流量",
+        "先发"
+      ],
+      "tag_en": [
+        "Affiliate",
+        "Platform",
+        "Traffic",
+        "First-mover"
+      ],
+      "window_cn": "7-30 天",
+      "window_en": "7-30 days",
+      "action_cn": "密切监控",
+      "action_en": "Monitor Closely",
+      "scores": {
+        "cn": {
+          "可信度": 9,
+          "时效性": 8,
+          "执行力": 6,
+          "不对称性": 6,
+          "市场热度": 6,
+          "竞争程度": 5,
+          "可扩展性": 6
+        },
+        "en": {
+          "Confidence": 9,
+          "Timeliness": 8,
+          "Executability": 6,
+          "Asymmetry": 6,
+          "Market Heat": 6,
+          "Competition": 5,
+          "Scalability": 6
+        }
+      },
+      "decisions_cn": [
+        "研究新层级规则细节",
+        "对比旧政策差异",
+        "准备快速入驻方案",
+        "监控竞品反应"
+      ],
+      "decisions_en": [
+        "Study new tier rules",
+        "Compare with old policy",
+        "Prepare fast onboarding",
+        "Monitor competitor moves"
+      ],
+      "path_cn": [
+        "规则解读",
+        "入驻准备",
+        "流量导入",
+        "效果优化",
+        "方案复制",
+        "持续放大"
+      ],
+      "path_en": [
+        "Rule analysis",
+        "Onboarding",
+        "Traffic",
+        "Optimize",
+        "Copy",
+        "Scale"
+      ],
       "created_at": "2026-05-10T00:00:00Z"
     },
     {
-      "id": 10, "is_new": true,
-      "title_cn": "监管政策变化开启新广告品类 — 政策套利窗口", "title_en": "Regulatory change opens new ad category — Policy arbitrage window",
-      "type_cn": "区域差", "type_en": "Region Gap", "score": 6.5,
-      "tag_cn": ["广告", "监管", "政策", "红利"], "tag_en": ["Ad", "Regulation", "Policy", "Bonus"],
-      "window_cn": "< 7 天", "window_en": "< 7 days", "action_cn": "预警提醒", "action_en": "Alert",
-      "scores": { "cn": { "可信度": 7, "时效性": 9, "执行力": 5, "不对称性": 6, "市场热度": 7, "竞争程度": 4, "可扩展性": 7 }, "en": { "Confidence": 7, "Timeliness": 9, "Executability": 5, "Asymmetry": 6, "Market Heat": 7, "Competition": 4, "Scalability": 7 } },
-      "decisions_cn": ["确认新政具体条款", "评估可投放品类范围", "准备首批广告素材", "设置政策变化预警"],
-      "decisions_en": ["Confirm new policy details", "Evaluate eligible categories", "Prepare first ad creatives", "Set policy change alert"],
-      "path_cn": ["政策解读", "品类筛选", "素材制作", "测试投放", "效果优化", "规模扩展"],
-      "path_en": ["Policy analysis", "Category selection", "Creative production", "Test launch", "Optimize", "Scale"],
+      "id": 10,
+      "is_new": true,
+      "title_cn": "监管政策变化开启新广告品类 — 政策套利窗口",
+      "title_en": "Regulatory change opens new ad category — Policy arbitrage window",
+      "type_cn": "区域差",
+      "type_en": "Region Gap",
+      "score": 6.5,
+      "tag_cn": [
+        "广告",
+        "监管",
+        "政策",
+        "红利"
+      ],
+      "tag_en": [
+        "Ad",
+        "Regulation",
+        "Policy",
+        "Bonus"
+      ],
+      "window_cn": "< 7 天",
+      "window_en": "< 7 days",
+      "action_cn": "预警提醒",
+      "action_en": "Alert",
+      "scores": {
+        "cn": {
+          "可信度": 7,
+          "时效性": 9,
+          "执行力": 5,
+          "不对称性": 6,
+          "市场热度": 7,
+          "竞争程度": 4,
+          "可扩展性": 7
+        },
+        "en": {
+          "Confidence": 7,
+          "Timeliness": 9,
+          "Executability": 5,
+          "Asymmetry": 6,
+          "Market Heat": 7,
+          "Competition": 4,
+          "Scalability": 7
+        }
+      },
+      "decisions_cn": [
+        "确认新政具体条款",
+        "评估可投放品类范围",
+        "准备首批广告素材",
+        "设置政策变化预警"
+      ],
+      "decisions_en": [
+        "Confirm new policy details",
+        "Evaluate eligible categories",
+        "Prepare first ad creatives",
+        "Set policy change alert"
+      ],
+      "path_cn": [
+        "政策解读",
+        "品类筛选",
+        "素材制作",
+        "测试投放",
+        "效果优化",
+        "规模扩展"
+      ],
+      "path_en": [
+        "Policy analysis",
+        "Category selection",
+        "Creative production",
+        "Test launch",
+        "Optimize",
+        "Scale"
+      ],
       "created_at": "2026-05-12T00:00:00Z"
     }
   ],
   "scan_log": [
-    { "time": "06:00:00", "source": "GitHub", "msg_cn": "趋势检测：新开源项目增速 +45%", "msg_en": "Trend detect: new open source project growth +45%" },
-    { "time": "05:52:00", "source": "HN", "msg_cn": "热帖分析：AI Agent 工具讨论量激增", "msg_en": "HN heatmap: AI Agent tool discussion surged" },
-    { "time": "05:44:00", "source": "Reddit", "msg_cn": "子论坛异常信号：跨境支付话题 +240%", "msg_en": "Subreddit anomaly: cross-border payment topic +240%" },
-    { "time": "05:36:00", "source": "Product Hunt", "msg_cn": "新产品检测：3 个相关工具上线", "msg_en": "New product detect: 3 related tools launched" },
-    { "time": "05:28:00", "source": "36Kr", "msg_cn": "行业动态：SaaS 跨境套利报道", "msg_en": "Industry news: SaaS cross-border arbitrage report" },
-    { "time": "05:20:00", "source": "VC Blog", "msg_cn": "投资风向：AI infra 赛道持续升温", "msg_en": "Investment trend: AI infra heats up" },
-    { "time": "05:12:00", "source": "ArXiv", "msg_cn": "新论文收录：高效 LLM 微调方法", "msg_en": "New paper: efficient LLM finetuning method" },
-    { "time": "05:04:00", "source": "Twitter/X", "msg_cn": "KOL 讨论：平台新联盟政策解读", "msg_en": "KOL discussion: new affiliate policy analysis" }
+    {
+      "time": "06:00:00",
+      "source": "GitHub",
+      "msg_cn": "趋势检测：新开源项目增速 +45%",
+      "msg_en": "Trend detect: new open source project growth +45%"
+    },
+    {
+      "time": "05:52:00",
+      "source": "HN",
+      "msg_cn": "热帖分析：AI Agent 工具讨论量激增",
+      "msg_en": "HN heatmap: AI Agent tool discussion surged"
+    },
+    {
+      "time": "05:44:00",
+      "source": "Reddit",
+      "msg_cn": "子论坛异常信号：跨境支付话题 +240%",
+      "msg_en": "Subreddit anomaly: cross-border payment topic +240%"
+    },
+    {
+      "time": "05:36:00",
+      "source": "Product Hunt",
+      "msg_cn": "新产品检测：3 个相关工具上线",
+      "msg_en": "New product detect: 3 related tools launched"
+    },
+    {
+      "time": "05:28:00",
+      "source": "36Kr",
+      "msg_cn": "行业动态：SaaS 跨境套利报道",
+      "msg_en": "Industry news: SaaS cross-border arbitrage report"
+    },
+    {
+      "time": "05:20:00",
+      "source": "VC Blog",
+      "msg_cn": "投资风向：AI infra 赛道持续升温",
+      "msg_en": "Investment trend: AI infra heats up"
+    },
+    {
+      "time": "05:12:00",
+      "source": "ArXiv",
+      "msg_cn": "新论文收录：高效 LLM 微调方法",
+      "msg_en": "New paper: efficient LLM finetuning method"
+    },
+    {
+      "time": "05:04:00",
+      "source": "Twitter/X",
+      "msg_cn": "KOL 讨论：平台新联盟政策解读",
+      "msg_en": "KOL discussion: new affiliate policy analysis"
+    }
   ]
 }

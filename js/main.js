@@ -272,12 +272,16 @@ window.onerror = function(msg, url, line) {
   window.switchToTrack = function(e) {
     e.preventDefault();
     document.querySelector('#page-home').style.display = 'none';
-    document.getElementById('track-panel').style.display = 'block';
+    const tp = document.getElementById('track-panel');
+    tp.classList.remove('page-hidden');
+    tp.style.display = 'block';
   };
 
   window.switchToHome = function(e) {
     e.preventDefault();
-    document.getElementById('track-panel').style.display = 'none';
+    const tp = document.getElementById('track-panel');
+    tp.classList.add('page-hidden');
+    tp.style.display = 'none';
     document.querySelector('#page-home').style.display = 'block';
   };
 

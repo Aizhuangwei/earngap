@@ -9,11 +9,11 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 DATA_FILE="$PROJECT_DIR/data/opportunities.json"
-GIT_MSG="[auto] daily opportunity scan $(date '+%Y-%m-%d %H:%M' --date='TZ=Asia/Shanghai')"
+GIT_MSG="[auto] daily opportunity scan $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M')"
 
 cd "$PROJECT_DIR"
 
-echo "[$(date)] === EarnGap Daily Scan Start ==="
+echo "[$(TZ='Asia/Shanghai' date)] === EarnGap Daily Scan Start ==="
 
 # --- Step 1: 确保 data 目录存在 ---
 mkdir -p data
@@ -59,4 +59,4 @@ fi
 echo "[INFO] Pushing to GitHub..."
 git push origin main 2>&1 || git push origin master 2>&1 || echo "[WARN] Push failed (may not have remote)"
 
-echo "[$(date)] === EarnGap Daily Scan Complete ==="
+echo "[$(TZ='Asia/Shanghai' date)] === EarnGap Daily Scan Complete ==="

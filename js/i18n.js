@@ -139,12 +139,14 @@ function setLang(lang) {
   console.log("setLang called:", lang, "currentLang was:", currentLang);
   currentLang = lang;
   document.documentElement.setAttribute('data-lang', lang);
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (I18N[lang] && I18N[lang][key]) {
-      el.textContent = I18N[lang][key];
-    }
-  });
+  try {
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (I18N[lang] && I18N[lang][key]) {
+        el.textContent = I18N[lang][key];
+      }
+    });
+  } catch(e) { console.warn('i18n update error:', e); }
   document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
     const key = el.getAttribute('data-i18n-placeholder');
     if (I18N[lang] && I18N[lang][key]) {
@@ -170,7 +172,7 @@ function setLang(lang) {
     updateSelectOptions('filter-sort', ['Score', 'Newest', 'Window']);
   }
   // 刷新所有动态文本
-  if (typeof refreshAll === 'function') refreshAll();
+  if (typeof refreshAll === "function") refreshAll();
   
 function updateSelectOptions(id, options) {
   const sel = document.getElementById(id);

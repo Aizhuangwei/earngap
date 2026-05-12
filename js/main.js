@@ -286,9 +286,18 @@ window.onerror = function(msg, url, line) {
   };
 
   window.switchPage = function(pageId) {
+    // 隐藏所有子页面
     document.querySelectorAll('.main-area > div').forEach(el => el.classList.add('page-hidden'));
+    // 如果是首页，同时关闭追踪面板
+    if (pageId === 'home') {
+      const tp = document.getElementById('track-panel');
+      tp.classList.add('page-hidden');
+      tp.style.display = 'none';
+    }
+    // 显示目标页面
     const target = document.getElementById('page-' + pageId);
     if (target) target.classList.remove('page-hidden');
+    // 更新导航激活状态
     document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
     const activeItem = document.querySelector('.sidebar-item[data-page="' + pageId + '"]');
     if (activeItem) activeItem.classList.add('active');

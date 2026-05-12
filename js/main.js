@@ -271,6 +271,8 @@ function switchToHome(e) {
 // ====== 完整刷新 ======
 function refreshAll() {
   const d = DATA.raw;
+  // 广告位始终渲染
+  renderAds();
   if (!d) return;
   renderOverview(d);
   renderTop3(d);

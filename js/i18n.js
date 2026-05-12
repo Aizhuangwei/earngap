@@ -136,6 +136,7 @@ const I18N = {
 let currentLang = 'en';
 
 function setLang(lang) {
+  console.log("setLang called:", lang, "currentLang was:", currentLang);
   currentLang = lang;
   document.documentElement.setAttribute('data-lang', lang);
   document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -154,6 +155,26 @@ function setLang(lang) {
   document.querySelectorAll('.lang-link').forEach(el => {
     el.classList.toggle('active', el.dataset.lang === lang);
   });
+  // 更新筛选下拉框选项
+  if (lang === 'zh') {
+    updateSelectOptions('filter-cycle', ['全部', '今日', '本周', '本月']);
+    updateSelectOptions('filter-type', ['全部', '时间差', '知识差', '平台套利', '价格差', '语言差']);
+    updateSelectOptions('filter-score', ['不限', '7+', '8+', '9+']);
+    updateSelectOptions('filter-days', ['全部', '24h', '3d', '7d']);
+    updateSelectOptions('filter-sort', ['分数最高', '最新发布', '即将截止']);
+  } else {
+    updateSelectOptions('filter-cycle', ['All', 'Today', 'Week', 'Month']);
+    updateSelectOptions('filter-type', ['All', 'Time Gap', 'Knowledge Gap', 'Platform Arb', 'Price Gap', 'Language Gap']);
+    updateSelectOptions('filter-score', ['Any', '7+', '8+', '9+']);
+    updateSelectOptions('filter-days', ['All', '24h', '3d', '7d']);
+    updateSelectOptions('filter-sort', ['Score', 'Newest', 'Window']);
+  }
   // 刷新所有动态文本
   if (typeof refreshAll === 'function') refreshAll();
+  
+function updateSelectOptions(id, options) {
+  const sel = document.getElementById(id);
+  if (!sel) return;
+  sel.innerHTML = options.map(o => '<option>' + o + '</option>').join('');
+}
 }

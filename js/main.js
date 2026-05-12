@@ -296,11 +296,10 @@ function switchPage(pageId) {
 // ====== 初始化 ======
 async function init() {
   await loadData();
-  if (DATA.raw) {
-    setLang('en');
-    refreshAll();
+  setLang('en');
+  if (DATA.raw) refreshAll();
 
-    // 语言切换
+  // 语言切换
     document.querySelectorAll('.lang-link').forEach(el => {
       el.addEventListener('click', (e) => {
         e.preventDefault();

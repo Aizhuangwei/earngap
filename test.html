@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>EarnGap Test</title></head>
+<body style="background:#0A0A0D;color:#4ADE80;padding:40px;font-family:monospace;">
+<h1>EarnGap Connection Test</h1>
+<div id="status">Testing...</div>
+<script>
+(async function() {
+  const el = document.getElementById('status');
+  try {
+    const r = await fetch('data/opportunities.json?_=' + Date.now());
+    const d = await r.json();
+    el.innerHTML = '✅ Data loaded: ' + d.meta.generated_at + '<br>Total: ' + d.meta.total_opportunities + '<br>Stats: ' + JSON.stringify(d.stats);
+  } catch(e) {
+    el.innerHTML = '❌ Fetch failed: ' + e.message;
+  }
+})();
+</script>
+</body>
+</html>

@@ -182,20 +182,42 @@ window.onerror = function(msg, url, line) {
 
   async function bootstrap() {
     console.log("bootstrap started");
+    // 显示骨架屏
+    showSkeleton();
     try {
       const resp = await fetch('data/opportunities.json?_=' + Date.now());
       const data = await resp.json();
       window._earngapData = data;
+      hideSkeleton();
       initDashboard(data);
       initCharts(data);
       initFilters(data);
       initSidebar(data);
       initAnimations();
+      // 最后更新时间
+      const ts = document.getElementById('last-update');
+      if (ts) {
+        const d = new Date(data.meta.generated_at);
+        ts.textContent = d.toLocaleString('zh-CN', { hour12: false }) + ' ' + (currentLang === 'en' ? 'CST' : '北京时间');
+      }
+      const tw = document.getElementById('last-update-wrapper');
+      if (tw) tw.style.display = 'block';
       console.log("bootstrap complete");
     } catch(e) {
+      hideSkeleton();
       console.warn('Data fetch failed, rendering static content only', e);
       initAnimations();
     }
+  }
+
+  function showSkeleton() {
+    const cards = document.querySelectorAll('.overview-card');
+    cards.forEach(el => { el.classList.add('skeleton-card'); el.innerHTML = ''; });
+    const top3 = document.getElementById('top3-grid');
+    if (top3) top3.innerHTML = '<div class="skeleton skeleton-card" style="height:160px"></div><div class="skeleton skeleton-card" style="height:160px"></div><div class="skeleton skeleton-card" style="height:160px"></div>';
+  }
+  function hideSkeleton() {
+    document.querySelectorAll('.skeleton-card, .skeleton').forEach(el => el.classList.remove('skeleton-card', 'skeleton'));
   }
 
   window.togglePanel = function(header) {
@@ -267,6 +289,14 @@ window.onerror = function(msg, url, line) {
       return '<div class="opp-panel ' + (isFirst ? "expanded" : "") + '"><div class="opp-panel-header" onclick="togglePanel(this)"><div class="opp-panel-title"><span class="opp-panel-name">' + title + '</span><span class="opp-panel-score">' + o.score + '</span></div><div class="opp-panel-toggle"><i class="fas fa-chevron-' + (isFirst ? "up" : "down") + '"></i></div></div><div class="opp-panel-body"><div class="opp-panel-inner"><div class="opp-tags">' + tags + '</div><div class="score-grid">' + scoreBars + '</div><div class="decision-section"><div class="decision-section-title"><i class="fas fa-bolt"></i>' + (currentLang === "en" ? "Key Decisions" : "高效决策项") + '</div>' + decisions + '</div><div><div class="path-section-title"><i class="fas fa-road"></i>' + (currentLang === "en" ? "Execution Path" : "执行路径") + '</div><div class="path-steps">' + paths + '</div></div></div></div></div>';
     }).join('');
     setTimeout(() => { document.querySelectorAll(".score-bar-fill").forEach(bar => { bar.style.width = bar.dataset.target; }); }, 400);
+  };
+
+  window.toggleAllPanels = function(expand) {
+    document.querySelectorAll('.opp-panel').forEach(p => {
+      p.classList.toggle('expanded', expand);
+      const icon = p.querySelector('.opp-panel-toggle i');
+      if (icon) icon.className = 'fas fa-chevron-' + (expand ? 'up' : 'down');
+    });
   };
 
   window.switchToTrack = function(e) {

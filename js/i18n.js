@@ -51,6 +51,9 @@ const I18N = {
     filter_range: 'Range', filter_sort: 'Sort', filter_btn: 'Filter',
     all: 'All', today: 'Today', week: 'Week', month: 'Month', any: 'Any',
     sort_score: 'Score', sort_new: 'Newest', sort_window: 'Window',
+    expand_all: 'Expand All',
+    collapse_all: 'Collapse All',
+    last_update: 'Last updated:',
 
     alert_title: 'High Score Alerts',
     pie_title: 'Score Distribution',
@@ -116,6 +119,9 @@ const I18N = {
     filter_range: '时间范围', filter_sort: '排序', filter_btn: '筛选',
     all: '全部', today: '今日', week: '本周', month: '本月', any: '不限',
     sort_score: '分数最高', sort_new: '最新发布', sort_window: '即将截止',
+    expand_all: '全部展开',
+    collapse_all: '全部收起',
+    last_update: '最后更新:',
 
     alert_title: '高分机会提醒',
     pie_title: '机会分级示意',

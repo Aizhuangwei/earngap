@@ -293,7 +293,6 @@ function switchPage(pageId) {
   document.querySelectorAll('.sidebar-item').forEach(el => el.classList.remove('active'));
   const activeItem = document.querySelector(`.sidebar-item[data-page="${pageId}"]`);
   if (activeItem) activeItem.classList.add('active');
-}
 
 // ====== 初始化 ======
 async function init() {

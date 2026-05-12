@@ -1,14 +1,11 @@
 /**
  * main.js — EarnGap v2 全量动态渲染引擎
+ * 所有数据从 data/opportunities.json 读取
  */
 window.onerror = function(msg, url, line) {
   document.body.insertAdjacentHTML('afterbegin', 
     '<div style="background:#EF4444;color:white;padding:8px;font-size:12px;font-family:monospace;">JS Error: ' + msg + ' at line ' + line + '</div>');
 };
-/**
- * main.js — EarnGap v2 全量动态渲染引擎
- * 所有数据从 data/opportunities.json 读取
- */
 
 // ====== 工具 ======
 const fmtNum = n => n.toLocaleString('zh-CN');

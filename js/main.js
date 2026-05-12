@@ -207,7 +207,66 @@ window.onerror = function(msg, url, line) {
   };
 
   window.applyFilter = function() {
-    if (window._earngapData) initFilters(window._earngapData);
+    if (!window._earngapData) return;
+    const data = window._earngapData;
+    const cycle = document.getElementById('filter-cycle').value;
+    const type = document.getElementById('filter-type').value;
+    const minScore = parseInt(document.getElementById('filter-score').value) || 0;
+    const range = document.getElementById('filter-days').value;
+    const sort = document.getElementById('filter-sort').value;
+
+    let filtered = [...data.opportunities];
+
+    // 信息差类型筛选
+    if (type !== 'All' && type !== '全部') {
+      filtered = filtered.filter(o => o.type_cn === type || o.type_en === type);
+    }
+
+    // 最低分数筛选
+    if (minScore > 0) {
+      filtered = filtered.filter(o => o.score >= minScore);
+    }
+
+    // 排序: 分数最高
+    if (sort === 'Score' || sort === '分数最高') {
+      filtered.sort((a, b) => b.score - a.score);
+    }
+    // 排序: 最新发布
+    else if (sort === 'Newest' || sort === '最新发布') {
+      filtered.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+    }
+    // 排序: 即将截止
+    else if (sort === 'Window' || sort === '即将截止') {
+      const windowOrder = { '< 7 天': 0, '< 7 days': 0, '7-30 天': 1, '7-30 days': 1, '30-90 天': 2, '30-90 days': 2, '> 90 天': 3, '> 90 days': 3 };
+      filtered.sort((a, b) => (windowOrder[a.window_cn] || 99) - (windowOrder[b.window_cn] || 99));
+    }
+
+    // 用筛选后的数据重新渲染面板
+    const container = document.getElementById('opportunity-list');
+    if (!container) return;
+    const opps = filtered;
+    container.innerHTML = opps.map((o, idx) => {
+      const isFirst = idx === 0;
+      const type = (currentLang === 'en' ? o.type_en : o.type_cn);
+      const window = (currentLang === 'en' ? o.window_en : o.window_cn);
+      const title = (currentLang === 'en' ? o.title_en : o.title_cn);
+      const scoreDims = currentLang === 'en'
+        ? ['Confidence', 'Timeliness', 'Executability', 'Asymmetry', 'Market Heat', 'Competition', 'Scalability']
+        : ['可信度', '时效性', '执行力', '不对称性', '市场热度', '竞争程度', '可扩展性'];
+      const s = o.scores;
+      const scoreMap = currentLang === 'en' ? s.en : s.cn;
+      const scoreBars = scoreDims.map(dim => {
+        const val = scoreMap[dim] || 7;
+        const pct = (val / 10) * 100;
+        const color = val >= 8 ? "#4ADE80" : val >= 6 ? "#FBBF24" : "#EF4444";
+        return '<div class="score-item"><div class="score-label"><span>' + dim + '</span><span>' + val + '/10</span></div><div class="score-bar-track"><div class="score-bar-fill" style="width:0%;background:' + color + '" data-target="' + pct + '%"></div></div></div>';
+      }).join('');
+      const decisions = (currentLang === "en" ? o.decisions_en : o.decisions_cn).map(d => '<div class="decision-item"><i class="fas fa-check-circle"></i>' + d + '</div>').join('');
+      const paths = (currentLang === "en" ? o.path_en : o.path_cn).map(p => '<span class="path-step"><i class="fas fa-arrow-right"></i>' + p + '</span>').join('');
+      const tags = '<span class="tag tag-green">' + type + '</span><span class="tag tag-gray">' + window + '</span>' + (o.is_new ? '<span class="tag tag-new">' + (currentLang === "en" ? "NEW" : "NEW") + '</span>' : "");
+      return '<div class="opp-panel ' + (isFirst ? "expanded" : "") + '"><div class="opp-panel-header" onclick="togglePanel(this)"><div class="opp-panel-title"><span class="opp-panel-name">' + title + '</span><span class="opp-panel-score">' + o.score + '</span></div><div class="opp-panel-toggle"><i class="fas fa-chevron-' + (isFirst ? "up" : "down") + '"></i></div></div><div class="opp-panel-body"><div class="opp-panel-inner"><div class="opp-tags">' + tags + '</div><div class="score-grid">' + scoreBars + '</div><div class="decision-section"><div class="decision-section-title"><i class="fas fa-bolt"></i>' + (currentLang === "en" ? "Key Decisions" : "高效决策项") + '</div>' + decisions + '</div><div><div class="path-section-title"><i class="fas fa-road"></i>' + (currentLang === "en" ? "Execution Path" : "执行路径") + '</div><div class="path-steps">' + paths + '</div></div></div></div></div>';
+    }).join('');
+    setTimeout(() => { document.querySelectorAll(".score-bar-fill").forEach(bar => { bar.style.width = bar.dataset.target; }); }, 400);
   };
 
   window.switchToTrack = function(e) {

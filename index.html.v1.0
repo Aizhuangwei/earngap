@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EarnGap - 发现信息差 · 把握时间窗口</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: {
+                            950: '#0a0b0e',
+                            900: '#12141a',
+                            800: '#1a1d26',
+                            700: '#222633',
+                            600: '#2d3142',
+                        },
+                        accent: {
+                            green: '#10b981',
+                            red: '#ef4444',
+                            blue: '#3b82f6',
+                            yellow: '#f59e0b',
+                            purple: '#8b5cf6',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .text-shadow {
+                text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            }
+            .card-border {
+                border: 1px solid rgba(75, 85, 99, 0.3);
+            }
+            .glow-green {
+                box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+            }
+            .glow-red {
+                box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+            }
+            .scrollbar-thin::-webkit-scrollbar {
+                width: 4px;
+            }
+            .scrollbar-thin::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .scrollbar-thin::-webkit-scrollbar-thumb {
+                background: #4b5563;
+                border-radius: 2px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-dark-950 text-gray-200 font-sans min-h-screen flex flex-col">
+    <!-- 顶部导航栏 -->
+    <header class="bg-dark-900 border-b border-dark-700 sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-8">
+                <div class="text-xl font-bold text-white flex items-center">
+                    <span class="text-accent-green mr-1">Earn</span>Gap
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <a href="#" class="text-white hover:text-accent-blue transition-colors">首页</a>
+                    <a href="#" class="text-gray-400 hover:text-accent-blue transition-colors">机会发现</a>
+                    <a href="#" class="text-gray-400 hover:text-accent-blue transition-colors">机会追踪</a>
+                    <a href="#" class="text-gray-400 hover:text-accent-blue transition-colors">报告中心</a>
+                    <a href="#" class="text-gray-400 hover:text-accent-blue transition-colors">方法论</a>
+                    <a href="#" class="text-gray-400 hover:text-accent-blue transition-colors">关于我们</a>
+                </nav>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative hidden md:block">
+                    <input type="text" placeholder="搜索机会、关键词..." class="bg-dark-800 border border-dark-600 rounded-md px-4 py-1.5 text-sm w-64 focus:outline-none focus:ring-1 focus:ring-accent-blue">
+                    <i class="fa fa-search absolute right-3 top-2 text-gray-500"></i>
+                </div>
+                <button class="relative text-gray-400 hover:text-white">
+                    <i class="fa fa-bell-o"></i>
+                    <span class="absolute -top-1 -right-1 bg-accent-red text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                </button>
+                <div class="flex items-center space-x-2">
+                    <img src="https://picsum.photos/id/1005/32/32" alt="用户头像" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- 左侧导航栏 -->
+        <aside class="w-16 bg-dark-900 border-r border-dark-700 flex flex-col items-center py-4 space-y-6">
+            <button class="p-3 text-accent-blue rounded-lg bg-dark-800">
+                <i class="fa fa-bar-chart"></i>
+                <span class="text-xs mt-1 block">数据概览区</span>
+            </button>
+            <button class="p-3 text-gray-400 hover:text-white rounded-lg hover:bg-dark-800">
+                <i class="fa fa-th-large"></i>
+                <span class="text-xs mt-1 block">Top3卡片区</span>
+            </button>
+            <button class="p-3 text-gray-400 hover:text-white rounded-lg hover:bg-dark-800">
+                <i class="fa fa-filter"></i>
+                <span class="text-xs mt-1 block">筛选搜索区</span>
+            </button>
+            <button class="p-3 text-gray-400 hover:text-white rounded-lg hover:bg-dark-800">
+                <i class="fa fa-list-alt"></i>
+                <span class="text-xs mt-1 block">折叠机会效应区</span>
+            </button>
+        </aside>
+
+        <!-- 主内容区 -->
+        <main class="flex-1 overflow-y-auto scrollbar-thin p-6">
+            <div class="max-w-7xl mx-auto">
+                <!-- 标题区域 -->
+                <div class="text-center mb-8">
+                    <h1 class="text-2xl font-bold text-white mb-2">发现信息差 · 把握时间窗口 · 赢在认知之前</h1>
+                    <p class="text-gray-400 text-sm">基于 OpenClaw 信息差机会扫描引擎，每日 06:30 全量更新</p>
+                </div>
+
+                <!-- 数据概览卡片 -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-dark-800 rounded-lg p-4 card-border">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400 text-xs">今日趋势总数</p>
+                                <p class="text-3xl font-bold text-white mt-1">15</p>
+                            </div>
+                            <span class="text-accent-green text-xs flex items-center">
+                                <i class="fa fa-arrow-up mr-1"></i> 较昨日 +5
+                            </span>
+                        </div>
+                    </div>
+                    <div class="bg-dark-800 rounded-lg p-4 card-border">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400 text-xs">今日机会 (≥70)</p>
+                                <p class="text-3xl font-bold text-white mt-1">3</p>
+                            </div>
+                            <span class="text-accent-green text-xs flex items-center">
+                                <i class="fa fa-arrow-up mr-1"></i> 较昨日 +2
+                            </span>
+                        </div>
+                    </div>
+                    <div class="bg-dark-800 rounded-lg p-4 card-border">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400 text-xs">GitHub爆款</p>
+                                <p class="text-3xl font-bold text-white mt-1">3</p>
+                            </div>
+                            <span class="text-accent-green text-xs flex items-center">
+                                <i class="fa fa-arrow-up mr-1"></i> 较昨日 +2
+                            </span>
+                        </div>
+                    </div>
+                    <div class="bg-dark-800 rounded-lg p-4 card-border">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="text-gray-400 text-xs">HN热门分</p>
+                                <p class="text-3xl font-bold text-white mt-1">88</p>
+                            </div>
+                            <span class="text-accent-green text-xs flex items-center">
+                                <i class="fa fa-arrow-up mr-1"></i> 较昨日 +12
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top3 高机会卡片 -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-4">
+                        <h2 class="text-lg font-semibold text-white">Top 3 高机会</h2>
+                        <a href="#" class="text-accent-blue text-sm hover:underline">查看全部 →</a>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <!-- 卡片1 -->
+                        <div class="bg-dark-800 rounded-lg p-5 card-border hover:glow-green transition-all">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center">
+                                    <span class="bg-accent-green text-white text-xs rounded-full w-5 h-5 flex items-center justify-center mr-2">1</span>
+                                    <span class="text-xs text-gray-400">Rust重构 JS生态</span>
+                                </div>
+                                <span class="text-accent-green text-sm font-medium">88.5分</span>
+                            </div>
+                            <h3 class="text-white font-medium mb-2">Bun Rewrite in Rust</h3>
+                            <p class="text-gray-400 text-xs mb-4">Zig→Rust语言迁移 · 55k+ stars</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-dark-700 text-xs px-2 py-1 rounded text-accent-yellow">EARLY</span>
+                                    <span class="bg-dark-700 text-xs px-2 py-1 rounded text-gray-300">30天窗口</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs text-gray-400">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-gray-500">趋势强度</span>
+                                    <span class="text-white mt-1">3.381</span>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-gray-500">平台热度</span>
+                                    <span class="text-white mt-1">GitHub Trending #1</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 卡片2 -->
+                        <div class="bg-dark-800 rounded-lg p-5 card-border hover:glow-green transition-all">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center">
+                                    <span class="bg-dark-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center mr-2">2</span>
+                                    <span class="text-xs text-gray-400">WiFi空间智能</span>
+                                </div>
+                                <span class="text-accent-green text-sm font-medium">85.2分</span>
+                            </div>
+                            <h3 class="text-white font-medium mb-2">RuView - 空间感知革命</h3>
+                            <p class="text-gray-400 text-xs mb-4">WiFi空间智能</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-dark-700 text-xs px-2 py-1 rounded text-accent-yellow">EARLY</span>
+                                    <span class="bg-dark-700 text-xs px-2 py-1 rounded text-gray-300">30天窗口</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs text-gray-400">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-gray-500">趋势强度</span>
+                                    <span class="text-white mt-1">1.892</span>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-gray-500">时间优势</span>
+                                    <span class="text-white mt-1">Reddit 热门 #3</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 卡片3 -->
+                        <div class="bg-dark-800 rounded-lg p-5 card-border hover:glow-green transition-all">
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="flex items-center">
+                                    <span class="bg-dark-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center mr-2">3</span>
+                                    <span class="text-xs text-gray-400">个人AI超级智能</span>
+                                </div>
+                                <span class="text-accent-green text-sm font-medium">79.3分</span>
+                            </div>
+                            <h3 class="text-white font-medium mb-2">OpenHuman个人AI</h3>
+                            <p class="text-gray-400 text-xs mb-4">个人AI超级智能</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-2">
+                                    <span class="bg-dark-700 text-xs px-2 py-1 rounded text-accent-purple">EXPANDING</span>
+                                    <span class="bg-dark-700 text-xs px-2 py-1 rounded text-gray-300">90天窗口</span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-xs text-gray-400">
+                                <div class="flex flex-col items-center">
+                                    <span class="text-gray-500">时间优势</span>
+                                    <span class="text-white mt-1">1.567</span>
+                                </div>
+                                <div class="flex flex-col items-center">
+                                    <span class="text-gray-500">LOCAL GAP</span>
+                                    <span class="text-white mt-1">Twitter 热推 #5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 筛选搜索区 -->
+                <div class="bg-dark-800 rounded-lg p-4 mb-8 card-border">
+                    <div class="flex flex-wrap gap-4 items-center">
+                        <div class="flex items-center space-x-2">
+                            <label class="text-gray-400 text-sm">周期机会:</label>
+                            <select class="bg-dark-700 border border-dark-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-accent-blue">
+                                <option>全部</option>
+                                <option>近7天</option>
+                                <option>近30天</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label class="text-gray-400 text-sm">信息差类型:</label>
+                            <select class="bg-dark-700 border border-dark-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-accent-blue">
+                                <option>全部</option>
+                                <option>时间优势</option>
+                                <option>趋势强度</option>
+                                <option>平台热度</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label class="text-gray-400 text-sm">最低分数:</label>
+                            <input type="range" min="0" max="100" value="50" class="w-32 accent-accent-blue">
+                            <span class="text-white text-sm">50+</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label class="text-gray-400 text-sm">风险等级:</label>
+                            <select class="bg-dark-700 border border-dark-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-accent-blue">
+                                <option>全部</option>
+                                <option>LOW</option>
+                                <option>MEDIUM</option>
+                                <option>HIGH</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label class="text-gray-400 text-sm">窗口天数:</label>
+                            <select class="bg-dark-700 border border-dark-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-accent-blue">
+                                <option>全部</option>
+                                <option>≤30天</option>
+                                <option>≤90天</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label class="text-gray-400 text-sm">综合排序:</label>
+                            <select class="bg-dark-700 border border-dark-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-accent-blue">
+                                <option>机会分降序</option>
+                                <option>机会分升序</option>
+                                <option>更新时间</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center ml-auto">
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer">
+                                <div class="relative w-9 h-5 bg-dark-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-accent-green"></div>
+                                <span class="ms-2 text-sm text-gray-400">仅高分机会</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 折叠机会效应区 -->
+                <div class="space-y-4">
+                    <!-- 机会详情卡片1 -->
+                    <div class="bg-dark-800 rounded-lg card-border overflow-hidden">
+                        <div class="p-4 cursor-pointer hover:bg-dark-700/30 transition-colors flex justify-between items-center" onclick="toggleExpand('opportunity1')">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa fa-chevron-down text-gray-500 transition-transform" id="icon-opportunity1"></i>
+                                <div>
+                                    <h3 class="text-white font-medium">Bun Rewrite in Rust — JS生态重构</h3>
+                                    <div class="flex items-center space-x-3 mt-1">
+                                        <span class="bg-dark-700 text-xs px-2 py-0.5 rounded text-accent-yellow">EARLY</span>
+                                        <span class="text-xs text-gray-400">30天窗口</span>
+                                        <span class="text-xs text-accent-red">截止: 2026-06-10</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="text-accent-green font-medium">88.5分</span>
+                        </div>
+                        <div class="p-4 pt-0 hidden" id="opportunity1">
+                            <div class="mt-4 border-t border-dark-700 pt-4">
+                                <p class="text-gray-400 text-xs mb-4">Bun项目从Zig迁移到Rust重写，JS生态重大转向。RuView通过WiFi信号实现空间智能和生命体征监测，55k+stars。</p>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                    <!-- 七维评分 -->
+                                    <div>
+                                        <h4 class="text-white text-sm font-medium mb-3">七维评分</h4>
+                                        <div class="space-y-2">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400 text-xs">趋势强度</span>
+                                                <span class="text-white text-xs">18.5 / 20</span>
+                                            </div>
+                                            <div class="w-full bg-dark-700 rounded-full h-1.5">
+                                                <div class="bg-accent-blue h-1.5 rounded-full" style="width: 92.5%"></div>
+                                            </div>
+                                            
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400 text-xs">市场潜力</span>
+                                                <span class="text-white text-xs">16.9 / 20</span>
+                                            </div>
+                                            <div class="w-full bg-dark-700 rounded-full h-1.5">
+                                                <div class="bg-accent-blue h-1.5 rounded-full" style="width: 84.5%"></div>
+                                            </div>
+                                            
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400 text-xs">信息差价值</span>
+                                                <span class="text-white text-xs">17.5 / 20</span>
+                                            </div>
+                                            <div class="w-full bg-dark-700 rounded-full h-1.5">
+                                                <div class="bg-accent-blue h-1.5 rounded-full" style="width: 87.5%"></div>
+                                            </div>
+                                            
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400 text-xs">执行可行性</span>
+                                                <span class="text-white text-xs">14.2 / 20</span>
+                                            </div>
+                                            <div class="w-full bg-dark-700 rounded-full h-1.5">
+                                                <div class="bg-accent-blue h-1.5 rounded-full" style="width: 71%"></div>
+                                            </div>
+                                            
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400 text-xs">竞争壁垒</span>
+                                                <span class="text-white text-xs">12.9 / 20</span>
+                                            </div>
+                                            <div class="w-full bg-dark-700 rounded-full h-1.5">
+                                                <div class="bg-accent-blue h-1.5 rounded-full" style="width: 64.5%"></div>
+                                            </div>
+                                            
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400 text-xs">时间窗口</span>
+                                                <span class="text-white text-xs">15.9 / 20</span>
+                                            </div>
+                                            <div class="w-full bg-dark-700 rounded-full h-1.5">
+                                                <div class="bg-accent-blue h-1.5 rounded-full" style="width: 79.5%"></div>
+                                            </div>
+                                            
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400 text-xs">综合评分</span>
+                                                <span class="text-white text-xs">18.9 / 20</span>
+                                            </div>
+                                            <div class="w-full bg-dark-700 rounded-full h-1.5">
+                                                <div class="bg-accent-green h-1.5 rounded-full" style="width: 94.5%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 高级决策 -->
+                                    <div>
+                                        <h4 class="text-white text-sm font-medium mb-3">高级决策</h4>
+                                        <div class="space-y-2 text-xs">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400">确定性</span>
+                                                <span class="text-accent-green">● 80%</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400">稀缺度</span>
+                                                <span class="text-accent-green">● 80%</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400">增长率</span>
+                                                <span class="text-accent-yellow">● 36%</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400">风险等级</span>
+                                                <span class="text-accent-yellow">● MEDIUM</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400">难易动作</span>
+                                                <span class="text-gray-300">可落地</span>
+                                            </div>
+                                        </div>
+                                        <button class="mt-4 bg-accent-green hover:bg-accent-green/90 text-white text-xs px-4 py-1.5 rounded transition-colors">立即跟进</button>
+                                    </div>
+                                    
+                                    <!-- 执行路径 -->
+                                    <div>
+                                        <h4 class="text-white text-sm font-medium mb-3">执行路径</h4>
+                                        <div class="space-y-3 text-xs">
+                                            <div class="flex items-start space-x-2">
+                                                <span class="bg-dark-700 text-white rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+                                                <span class="text-gray-300">市场铺垫 (1-2周)</span>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <span class="bg-dark-700 text-white rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+                                                <span class="text-gray-300">最小产品 (2-4周)</span>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <span class="bg-dark-700 text-white rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+                                                <span class="text-gray-300">客户测试 (4-6周)</span>
+                                            </div>
+                                            <div class="flex items-start space-x-2">
+                                                <span class="bg-dark-700 text-white rounded-full w-4 h-4 flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+                                                <span class="text-gray-300">正式发布 (6-8周)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-wrap items-center justify-between text-xs text-gray-400 pt-4 border-t border-dark-700">
+                                    <div class="flex items-center space-x-4">
+                                        <span>信息差类型: <span class="text-white">时间优势 + 趋势强度 + 平台热度</span></span>
+                                        <span>来源: <span class="text-white">GitHub Trending #1</span></span>
+                                    </div>
+                                    <span>发现时间: 2026-05-15 08:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 机会详情卡片2 -->
+                    <div class="bg-dark-800 rounded-lg card-border overflow-hidden">
+                        <div class="p-4 cursor-pointer hover:bg-dark-700/30 transition-colors flex justify-between items-center" onclick="toggleExpand('opportunity2')">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa fa-chevron-down text-gray-500 transition-transform" id="icon-opportunity2"></i>
+                                <div>
+                                    <h3 class="text-white font-medium">RuView - 空间感知革命 — WiFi空间智能</h3>
+                                </div>
+                            </div>
+                            <span class="text-accent-green font-medium">85.2分</span>
+                        </div>
+                        <div class="p-4 pt-0 hidden" id="opportunity2">
+                            <!-- 内容省略，与上面类似 -->
+                        </div>
+                    </div>
+                    
+                    <!-- 机会详情卡片3 -->
+                    <div class="bg-dark-800 rounded-lg card-border overflow-hidden">
+                        <div class="p-4 cursor-pointer hover:bg-dark-700/30 transition-colors flex justify-between items-center" onclick="toggleExpand('opportunity3')">
+                            <div class="flex items-center space-x-3">
+                                <i class="fa fa-chevron-down text-gray-500 transition-transform" id="icon-opportunity3"></i>
+                                <div>
+                                    <h3 class="text-white font-medium">OpenHuman个人AI — 个人AI超级智能</h3>
+                                </div>
+                            </div>
+                            <span class="text-accent-green font-medium">79.3分</span>
+                        </div>
+                        <div class="p-4 pt-0 hidden" id="opportunity3">
+                            <!-- 内容省略，与上面类似 -->
+                        </div>
+                    </div>
+                    
+                    <div class="text-center text-gray-400 text-sm py-4">
+                        显示1-3 / 共7个高机会
+                        <button class="text-accent-blue hover:underline ml-2">加载更多 ↓</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 右侧信息区 -->
+        <aside class="w-72 bg-dark-900 border-l border-dark-700 p-4 hidden lg:block overflow-y-auto scrollbar-thin">
+            <!-- 高分提醒 -->
+            <div class="bg-dark-800 rounded-lg p-4 mb-6 border border-accent-red/30 glow-red">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-white font-medium text-sm">高分提醒</h3>
+                    <span class="bg-accent-red text-white text-xs px-2 py-0.5 rounded">2</span>
+                </div>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-gray-300">1. Bun Rewrite in Rust</span>
+                        <span class="text-accent-green">88.5分</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-gray-300">2. RuView - 空间感知革命</span>
+                        <span class="text-accent-green">76.9分</span>
+                    </div>
+                </div>
+                <a href="#" class="text-accent-blue text-xs hover:underline mt-2 inline-block">查看全部提醒 →</a>
+            </div>
+            
+            <!-- 高机会分提醒 -->
+            <div class="bg-dark-800 rounded-lg p-4 mb-6 card-border">
+                <h3 class="text-white font-medium text-sm mb-3">高机会分提醒</h3>
+                <div class="space-y-2">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-gray-300">1. Bun Rewrite in Rust</span>
+                        <span class="text-accent-green">88.5分</span>
+                    </div>
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="text-gray-300">2. RuView - 空间感知革命</span>
+                        <span class="text-accent-green">76.9分</span>
+                    </div>
+                </div>
+                <a href="#" class="text-accent-blue text-xs hover:underline mt-2 inline-block">查看全部提醒 →</a>
+            </div>
+            
+            <!-- 机会分类图 -->
+            <div class="bg-dark-800 rounded-lg p-4 mb-6 card-border">
+                <h3 class="text-white font-medium text-sm mb-3">机会分类图</h3>
+                <div class="flex items-center justify-center">
+                    <canvas id="categoryChart" width="180" height="180"></canvas>
+                </div>
+                <div class="mt-3 space-y-1 text-xs">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-accent-red mr-2"></span>
+                            <span class="text-gray-400">HIGH (≥70)</span>
+                        </div>
+                        <span class="text-white">7 (3.42%)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-accent-yellow mr-2"></span>
+                            <span class="text-gray-400">WATCH (50-69)</span>
+                        </div>
+                        <span class="text-white">10 (3.42%)</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="w-2 h-2 rounded-full bg-gray-500 mr-2"></span>
+                            <span class="text-gray-400">IGNORE (<50)</span>
+                        </div>
+                        <span class="text-white">6 (1.42%)</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 信息差类型分布 -->
+            <div class="bg-dark-800 rounded-lg p-4 mb-6 card-border">
+                <h3 class="text-white font-medium text-sm mb-3">信息差类型分布</h3>
+                <div class="space-y-3 text-xs">
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-400">TIME_GAP</span>
+                            <span class="text-white">5 (71.4%)</span>
+                        </div>
+                        <div class="w-full bg-dark-700 rounded-full h-1.5">
+                            <div class="bg-accent-blue h-1.5 rounded-full" style="width: 71.4%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-400">KNOWLEDGE_GAP</span>
+                            <span class="text-white">4 (57.1%)</span>
+                        </div>
+                        <div class="w-full bg-dark-700 rounded-full h-1.5">
+                            <div class="bg-accent-blue h-1.5 rounded-full" style="width: 57.1%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-400">PLATFORM_GAP</span>
+                            <span class="text-white">3 (42.9%)</span>
+                        </div>
+                        <div class="w-full bg-dark-700 rounded-full h-1.5">
+                            <div class="bg-accent-blue h-1.5 rounded-full" style="width: 42.9%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-400">LOCAL_GAP</span>
+                            <span class="text-white">2 (28.6%)</span>
+                        </div>
+                        <div class="w-full bg-dark-700 rounded-full h-1.5">
+                            <div class="bg-accent-blue h-1.5 rounded-full" style="width: 28.6%"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between mb-1">
+                            <span class="text-gray-400">RESOURCE_GAP</span>
+                            <span class="text-white">1 (14.3%)</span>
+                        </div>
+                        <div class="w-full bg-dark-700 rounded-full h-1.5">
+                            <div class="bg-accent-blue h-1.5 rounded-full" style="width: 14.3%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 最近扫描记录 -->
+            <div class="bg-dark-800 rounded-lg p-4 card-border">
+                <h3 class="text-white font-medium text-sm mb-3">最近扫描记录</h3>
+                <div class="space-y-2 text-xs">
+                    <div class="flex items-start">
+                        <span class="text-accent-green mr-2 mt-0.5">●</span>
+                        <div>
+                            <p class="text-gray-300">2026-05-15 08:00 — 全量扫描</p>
+                            <p class="text-gray-500">15 个信号</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-accent-green mr-2 mt-0.5">●</span>
+                        <div>
+                            <p class="text-gray-300">2026-05-14 08:00 — 全量扫描</p>
+                            <p class="text-gray-500">12 个信号</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <span class="text-accent-green mr-2 mt-0.5">●</span>
+                        <div>
+                            <p class="text-gray-300">2026-05-13 08:00 — 全量扫描</p>
+                            <p class="text-gray-500">10 个信号</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="text-accent-blue text-xs hover:underline mt-3 inline-block">查看历史记录 →</a>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="bg-dark-900 border-t border-dark-700 py-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-8">
+                <div>
+                    <div class="text-xl font-bold text-white mb-4 flex items-center">
+                        <span class="text-accent-green mr-1">Earn</span>Gap
+                    </div>
+                    <p class="text-gray-400 text-xs">发现信息差，把握时间窗口，赢在认知之前</p>
+                    <p class="text-gray-500 text-xs mt-4">© 2025 EarnGap.com. All rights reserved.</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-medium mb-4">产品</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">机会发现</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">机会追踪</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">报告中心</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API 文档</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-medium mb-4">资源</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">方法论</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">使用指南</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">常见问题</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">更新日志</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-medium mb-4">关于</h4>
+                    <ul class="space-y-2 text-xs text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">关于我们</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">联系我们</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">隐私政策</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">服务条款</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-sm font-medium mb-4">订阅更新</h4>
+                    <p class="text-gray-400 text-xs mb-3">每日机会报告发送到您的邮箱</p>
+                    <div class="flex">
+                        <input type="email" placeholder="输入邮箱地址" class="bg-dark-800 border border-dark-600 rounded-l px-3 py-1.5 text-xs w-full focus:outline-none focus:ring-1 focus:ring-accent-blue">
+                        <button class="bg-accent-blue hover:bg-accent-blue/90 text-white text-xs px-3 py-1.5 rounded-r transition-colors">订阅</button>
+                    </div>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa fa-github"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fa fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center text-gray-500 text-xs mt-8 pt-4 border-t border-dark-700">
+                数据每日 06:30 更新 | 免责声明：本平台信息仅供参考，不构成投资建议
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 折叠/展开功能
+        function toggleExpand(id) {
+            const element = document.getElementById(id);
+            const icon = document.getElementById(`icon-${id}`);
+            
+            if (element.classList.contains('hidden')) {
+                element.classList.remove('hidden');
+                icon.classList.add('rotate-180');
+            } else {
+                element.classList.add('hidden');
+                icon.classList.remove('rotate-180');
+            }
+        }
+        
+        // 初始化图表
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['HIGH', 'WATCH', 'IGNORE'],
+                    datasets: [{
+                        data: [7, 10, 6],
+                        backgroundColor: [
+                            '#ef4444',
+                            '#f59e0b',
+                            '#4b5563'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#1a1d26',
+                            titleColor: '#fff',
+                            bodyColor: '#9ca3af',
+                            borderColor: '#374151',
+                            borderWidth: 1,
+                            padding: 10,
+                            displayColors: true,
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.raw || 0;
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = Math.round((value / total) * 100);
+                                    return `${label}: ${value} (${percentage}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
